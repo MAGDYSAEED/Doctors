@@ -236,8 +236,12 @@ $("newArea").onkeydown=function(e){if(e.key==="Enter")$("okArea").onclick()};
 $("exp").onclick=function(){var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify({areas:S.areas,docs:S.docs})],{type:"application/json"}));a.download="doctors-backup.json";a.click()};
 $("imp").onchange=function(){var f=this.files[0];if(!f)return;var r=new FileReader();r.onload=function(){try{var o=JSON.parse(r.result);if(!Array.isArray(o.areas)||!Array.isArray(o.docs))throw 0;S.areas=o.areas;S.docs=o.docs;persist();animNext=true;render()}catch(e){$("note").hidden=false;$("note").textContent="الملف مش صالح"}};r.readAsText(f)};
 drawDays();render();
-document.addEventListener("visibilitychange",function(){if(!document.hidden)render()});
-setInterval(render,30000);tick();setInterval(tick,1000);
+function syncNow(){tick();render()}
+document.addEventListener("visibilitychange",function(){if(!document.hidden)syncNow()});
+window.addEventListener("focus",syncNow);
+window.addEventListener("pageshow",syncNow);
+(function loop(){tick();setTimeout(loop,1000-(Date.now()%1000)+5)})();
+setInterval(render,30000);
 (function(){var l=localLoad();if(l){S.areas=l.areas||[];S.docs=l.docs||[]}ready=true;animNext=true;render()})();
 </script>
 
