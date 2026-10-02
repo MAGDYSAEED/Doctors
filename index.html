@@ -71,6 +71,8 @@ input{width:100%;font:inherit;padding:12px;border:1px solid var(--line);border-r
 .wrap{display:flex;flex-wrap:wrap;gap:6px}
 .row{display:flex;gap:10px}.row>div{flex:1}
 summary{margin-top:14px;color:var(--mut);font-size:14px;cursor:pointer}
+.dr{display:flex;justify-content:space-between;padding:7px 0;border-top:1px solid var(--line);font-size:14px;color:var(--mut)}.dr.td{color:var(--ink);font-weight:700}
+.tr{display:flex;align-items:center;gap:8px;margin-top:8px}.tr b{width:62px;flex:none;font-size:14px}.tr span{flex:1;font-size:12px;color:var(--mut)}.tr input{padding:9px}
 .save{width:100%;margin-top:18px;background:var(--pri);color:#fff;border:0;border-radius:14px;padding:15px;font-size:16px;font-weight:700;cursor:pointer}
 #login{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:24px}
 #login[hidden]{display:none}#login h2{margin:0;font-size:26px}#login p{margin:0;color:var(--mut)}
@@ -94,13 +96,15 @@ summary{margin-top:14px;color:var(--mut);font-size:14px;cursor:pointer}
   <label>المنطقة</label><div class="wrap" id="ach"></div>
   <label>المكان (عيادة / مستشفى)</label><input id="p" autocomplete="off">
   <label>أيام التواجد</label><div class="wrap" style="margin-bottom:6px"><button class="chip add" id="pAll">كل الأيام</button><button class="chip add" id="pNF">عدا الجمعة</button></div><div class="wrap" id="days"></div>
-  <div class="row"><div><label>من</label><input type="time" id="f" value="10:00"></div><div><label>إلى</label><input type="time" id="t" value="14:00"></div></div>
+  <div id="tms"></div>
   <details><summary>تفاصيل إضافية</summary><label>وصف المكان</label><input id="d" placeholder="الدور التالت، فوق الصيدلية"><label>لينك جوجل ماب</label><input id="m" type="url" inputmode="url" placeholder="https://maps.app.goo.gl/..."></details>
   <div class="err" id="ferr" hidden></div>
   <button class="save" id="save">حفظ</button>
   <button class="b" id="cl1" style="width:100%;margin-top:8px">إلغاء</button>
 </div></div>
 <div class="ov" id="set" hidden><div class="sheet"><h2>الإعدادات</h2>
+  <label>تظبيط الساعة (لو فيه فرق عن موبايلك)</label><div class="btns" style="align-items:center;margin-top:0"><button class="b" id="oM">-</button><b id="oV" style="min-width:28px;text-align:center">0</b><button class="b" id="oP">+</button><span style="color:var(--mut);font-size:13px">ساعة</span></div>
+  <label>النسخ الاحتياطي والحساب</label>
   <div class="btns"><button class="b" id="exp">تصدير نسخة احتياطية</button><label class="b" style="margin:0;color:var(--ink);font-size:14px">استيراد<input type="file" id="imp" accept=".json" hidden></label><button class="b del" id="out" style="margin-inline-start:0">تسجيل خروج</button></div>
   <button class="b" id="cl2" style="width:100%;margin-top:16px">إغلاق</button>
 </div></div>
@@ -108,24 +112,29 @@ summary{margin-top:14px;color:var(--mut);font-size:14px;cursor:pointer}
 <script>
 var DN=["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"],ORDER=[6,0,1,2,3,4,5],SH=["أحد","اثنين","ثلاثاء","أربعاء","خميس","جمعة","سبت"];
 var SPEC=["باطنة","قلب","عظام","أطفال","نساء وتوليد","جلدية","عيون","أنف وأذن","أسنان","مخ وأعصاب"];
+var OFF=0;try{OFF=+localStorage.getItem("clk-off")||0}catch(e){}
+function NW(){return new Date(Date.now()+OFF*36e5)}
+function showOff(){$("oV").textContent=(OFF>0?"+":"")+OFF}
 var S={areas:[],docs:[],sel:"all"};
-var animNext=true,shown=false,pendDel=null,ref=null,ready=false,picked=[],editId=null,openId=null,fArea="",qs="";
+var animNext=true,shown=false,pendDel=null,ref=null,ready=false,sch={},lastT={from:"10:00",to:"14:00"},editId=null,openId=null,fArea="",qs="";
 function $(i){return document.getElementById(i)}
 function esc(s){var e=document.createElement("div");e.textContent=s==null?"":s;return e.innerHTML.replace(/"/g,"&quot;")}
 function mins(s){var p=String(s||"0:0").split(":");return +p[0]*60+ +p[1]}
-function metToday(t,n){return !!t&&new Date(t).toDateString()===(n||new Date()).toDateString()}
-function t12(x){var d=new Date(x),h=d.getHours(),m=d.getMinutes();return (h%12||12)+":"+(m<10?"0":"")+m+" "+(h<12?"ص":"م")}
+function metToday(t,n){return !!t&&new Date(t+OFF*36e5).toDateString()===(n||NW()).toDateString()}
+function t12(x){var d=new Date(x+OFF*36e5),h=d.getHours(),m=d.getMinutes();return (h%12||12)+":"+(m<10?"0":"")+m+" "+(h<12?"ص":"م")}
 function f12(s){var p=String(s||"0:00").split(":"),h=+p[0];return (h%12||12)+":"+p[1]+" "+(h<12?"ص":"م")}
-var lastDay=new Date().toDateString();
-function tick(){var n=new Date(),h=n.getHours(),z=function(v){return v<10?"0"+v:v};
+var lastDay=NW().toDateString();
+function tick(){var n=NW(),h=n.getHours(),z=function(v){return v<10?"0"+v:v};
 $("clk").innerHTML=(h%12||12)+":"+z(n.getMinutes())+"<small>"+z(n.getSeconds())+" "+(h<12?"ص":"م")+"</small>";
 var dd=n.toDateString();if(dd!==lastDay){lastDay=dd;render()}}
+function sc(d){if(d.sched)return d.sched;var o={};(d.days||[]).forEach(function(i){o[i]={from:d.from,to:d.to}});return o}
 function st(d,now){
-  var m=now.getHours()*60+now.getMinutes(),f=mins(d.from),t=mins(d.to),td=d.days.indexOf(now.getDay())>=0;
-  if(td&&m>=f&&m<t)return{k:"on",t:"موجود لحد "+f12(d.to),r:0};
-  if(td&&m<f)return{k:"later",t:"يوصل النهارده "+f12(d.from),r:1};
-  for(var i=1;i<=7;i++){var w=(now.getDay()+i)%7;if(d.days.indexOf(w)>=0)return{k:"off",t:(td?"خلص. ":"")+"الجاي: "+(i==1?"بكرة":DN[w])+" "+f12(d.from),r:2}}
-  return{k:"off",t:"مفيش أيام",r:3}
+  var q=sc(d),m=now.getHours()*60+now.getMinutes(),w0=now.getDay(),c=q[w0];
+  if(c){var f=mins(c.from),t=mins(c.to);
+    if(m>=f&&m<t)return{k:"on",t:"موجود لحد "+f12(c.to),r:0,f:f};
+    if(m<f)return{k:"later",t:"يوصل النهارده "+f12(c.from),r:1,f:f}}
+  for(var i=1;i<=7;i++){var w=(w0+i)%7,n=q[w];if(n)return{k:"off",t:(c?"خلص. ":"")+"الجاي: "+(i==1?"بكرة":DN[w])+" "+f12(n.from),r:2,f:mins(n.from)}}
+  return{k:"off",t:"مفيش أيام",r:3,f:0}
 }
 function localLoad(){try{var r=localStorage.getItem("docs-v1");if(r)return JSON.parse(r)}catch(e){}return null}
 function persist(){
@@ -137,7 +146,7 @@ function mapLink(d){
   return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent([d.place,d.name,d.area,"الإسكندرية"].filter(Boolean).join(" "));
 }
 function render(){
-  var now=new Date(),mt=S.docs.filter(function(d){return metToday(d.metAt,now)}).sort(function(a,b){return b.metAt-a.metAt});
+  var now=NW(),mt=S.docs.filter(function(d){return metToday(d.metAt,now)}).sort(function(a,b){return b.metAt-a.metAt});
   $("today").textContent=DN[now.getDay()]+" "+now.getDate()+"/"+(now.getMonth()+1);
   $("sT").textContent=S.docs.length;$("sM").textContent=mt.length;
   $("sN").textContent=S.docs.filter(function(d){return st(d,now).k=="on"}).length;
@@ -152,11 +161,11 @@ function render(){
   var list=S.docs.filter(function(d){
     if(!(S.sel=="all"||(S.sel=="none"?!d.area:d.area==S.sel)))return false;
     return !q||[d.name,d.spec,d.place,d.area,d.desc].join(" ").toLowerCase().indexOf(q)>=0;
-  }).map(function(d){return{d:d,s:st(d,now)}}).sort(function(a,b){return a.s.r-b.s.r||mins(a.d.from)-mins(b.d.from)});
+  }).map(function(d){return{d:d,s:st(d,now)}}).sort(function(a,b){return a.s.r-b.s.r||a.s.f-b.s.f});
   if(!list.length){$("list").innerHTML='<div class="empty">'+(S.docs.length?"مفيش نتائج":"ضيف أول دكتور بزر +")+'</div>';return}
   $("list").innerHTML=list.map(function(o){
     var d=o.d,s=o.s,id=esc(d.id),met=metToday(d.metAt,now),op=openId===d.id,x="";
-    if(op){x=(d.desc?'<div class="pl">'+esc(d.desc)+'</div>':"")+'<div class="dys">'+ORDER.map(function(i){return '<i class="dy'+(d.days.indexOf(i)>=0?" a":"")+'">'+SH[i]+'</i>'}).join("")+'</div><div class="mt">'+f12(d.from)+' - '+f12(d.to)+'</div><div class="btns"><a class="b p" target="_blank" rel="noopener" href="'+esc(mapLink(d))+'">الموقع</a><button class="b" data-e="'+id+'">تعديل</button><button class="b del" data-x="'+id+'">'+(pendDel===d.id?"تأكيد الحذف؟":"حذف")+'</button></div>'}
+    if(op){x=(d.desc?'<div class="pl">'+esc(d.desc)+'</div>':"")+'<div class="dl">'+ORDER.filter(function(i){return sc(d)[i]}).map(function(i){var c=sc(d)[i];return '<div class="dr'+(i==now.getDay()?" td":"")+'"><span>'+DN[i]+'</span><span>'+f12(c.from)+' - '+f12(c.to)+'</span></div>'}).join("")+'</div><div class="btns"><a class="b p" target="_blank" rel="noopener" href="'+esc(mapLink(d))+'">الموقع</a><button class="b" data-e="'+id+'">تعديل</button><button class="b del" data-x="'+id+'">'+(pendDel===d.id?"تأكيد الحذف؟":"حذف")+'</button></div>'}
     return '<div class="cd '+s.k+(met?" met":"")+'"><button class="ck" data-m="'+id+'" aria-label="اتقابل">'+(met?"✓":"")+'</button><div class="bd" data-o="'+id+'"><div class="nm">'+esc(d.name)+(d.spec?'<span class="sp">'+esc(d.spec)+'</span>':"")+'</div><div class="pl">'+esc(d.place||"")+(d.place&&d.area?" - ":"")+esc(d.area||"")+'</div><div class="stt"><i></i>'+esc(s.t)+(met?" - اتقابل "+t12(d.metAt):"")+'</div>'+x+'</div></div>'
   }).join("");
   animNext=false;
@@ -165,13 +174,18 @@ function drawForm(){
   $("ach").innerHTML='<button class="chip'+(fArea===""?" sel":"")+'" data-ar="">بدون</button>'+S.areas.map(function(a){return '<button class="chip'+(fArea===a?" sel":"")+'" data-ar="'+esc(a)+'">'+esc(a)+'</button>'}).join("")+'<button class="chip add" id="addF">+ جديدة</button>';
   var u=[];S.docs.forEach(function(d){if(d.spec&&u.indexOf(d.spec)<0)u.push(d.spec)});
   $("sps").innerHTML=u.concat(SPEC.filter(function(x){return u.indexOf(x)<0})).slice(0,10).map(function(x){return '<button class="chip" data-sp="'+esc(x)+'">'+esc(x)+'</button>'}).join("");
-  $("days").innerHTML=ORDER.map(function(i){return '<button class="chip'+(picked.indexOf(i)>=0?" sel":"")+'" data-d="'+i+'">'+SH[i]+'</button>'}).join("");
+  drawT();
+  $("days").innerHTML=ORDER.map(function(i){return '<button class="chip'+(sch[i]?" sel":"")+'" data-d="'+i+'">'+SH[i]+'</button>'}).join("");
 }
+function drawT(){var ks=ORDER.filter(function(i){return sch[i]});
+  $("tms").innerHTML=(ks.length?'<div class="tr"><b></b><span>من</span><span>إلى</span></div>':"")+ks.map(function(i){return '<div class="tr"><b>'+DN[i]+'</b><input type="time" data-tf="'+i+'" value="'+sch[i].from+'"><input type="time" data-tt="'+i+'" value="'+sch[i].to+'"></div>'}).join("")+(ks.length>1?'<button class="chip add" id="cpT" style="margin-top:10px">نفس وقت '+DN[ks[0]]+' لكل الأيام</button>':"")}
+function setDays(a){var o={};a.forEach(function(i){o[i]=sch[i]||{from:lastT.from,to:lastT.to}});sch=o;drawForm()}
+$("tms").oninput=function(e){var T=e.target,f=T.getAttribute("data-tf"),t=T.getAttribute("data-tt"),k=f!==null?f:t;if(k===null)return;if(f!==null)sch[k].from=T.value;else sch[k].to=T.value;lastT={from:sch[k].from,to:sch[k].to}};
 function openForm(id){
   editId=null;$("ferr").hidden=true;
-  ["n","s","p","d","m"].forEach(function(i){$(i).value=""});$("f").value="10:00";$("t").value="14:00";picked=[];fArea=S.areas.indexOf(S.sel)>=0?S.sel:"";
+  ["n","s","p","d","m"].forEach(function(i){$(i).value=""});sch={};fArea=S.areas.indexOf(S.sel)>=0?S.sel:"";
   $("ftitle").textContent="دكتور جديد";
-  S.docs.forEach(function(d){if(d.id==id){editId=d.id;$("n").value=d.name;$("s").value=d.spec||"";$("p").value=d.place||"";$("d").value=d.desc||"";$("m").value=d.map||"";$("f").value=d.from;$("t").value=d.to;picked=d.days.slice();fArea=d.area||"";$("ftitle").textContent="تعديل دكتور"}});
+  S.docs.forEach(function(d){if(d.id==id){editId=d.id;$("n").value=d.name;$("s").value=d.spec||"";$("p").value=d.place||"";$("d").value=d.desc||"";$("m").value=d.map||"";sch=JSON.parse(JSON.stringify(sc(d)));fArea=d.area||"";$("ftitle").textContent="تعديل دكتور"}});
   drawForm();$("sheet").hidden=false;if(!editId)setTimeout(function(){$("n").focus()},300);
 }
 function addArea(inForm){
@@ -186,26 +200,30 @@ document.addEventListener("click",function(e){
   if(m!==null){S.docs.forEach(function(d){if(d.id==m)d.metAt=metToday(d.metAt)?null:Date.now()});persist();render();return}
   if(x!==null){if(pendDel===x){S.docs=S.docs.filter(function(d){return d.id!=x});pendDel=null;persist();render()}else{pendDel=x;render();setTimeout(function(){if(pendDel===x){pendDel=null;render()}},4000)}return}
   if(ed!==null){openForm(ed);return}
-  if(ds!==null){ds=+ds;var k=picked.indexOf(ds);if(k<0)picked.push(ds);else picked.splice(k,1);drawForm();return}
+  if(ds!==null){ds=+ds;if(sch[ds])delete sch[ds];else sch[ds]={from:lastT.from,to:lastT.to};drawForm();return}
   if(sp!==null){$("s").value=sp;return}
   if(ar!==null){fArea=ar;drawForm();return}
   if(a!==null){S.sel=a;render();return}
   if(o!==null){openId=openId===o?null:o;render();return}
-  if(i=="pAll"){picked=[0,1,2,3,4,5,6];drawForm()}
-  else if(i=="pNF"){picked=[6,0,1,2,3,4];drawForm()}
+  if(i=="pAll")setDays([0,1,2,3,4,5,6]);
+  else if(i=="pNF")setDays([6,0,1,2,3,4]);
+  else if(i=="cpT"){var ks=ORDER.filter(function(k){return sch[k]}),c=sch[ks[0]];ks.forEach(function(k){sch[k]={from:c.from,to:c.to}});drawForm()}
   else if(i=="addA")addArea(false);
   else if(i=="addF")addArea(true);
   else if(i=="fab")openForm();
-  else if(i=="menu")$("set").hidden=false;
+  else if(i=="menu"){showOff();$("set").hidden=false}
+  else if(i=="oM"||i=="oP"){OFF+=i=="oP"?1:-1;try{localStorage.setItem("clk-off",OFF)}catch(e){}showOff();tick();render()}
   else if(i=="cl1"||i=="sheet")$("sheet").hidden=true;
   else if(i=="cl2"||i=="set")$("set").hidden=true;
 });
 $("q").oninput=function(){qs=this.value;render()};
 $("save").onclick=function(){
-  var n=$("n").value.trim(),er=$("ferr");
-  if(!n||!picked.length){er.hidden=false;er.textContent=!n?"اكتب اسم الدكتور":"اختار يوم واحد على الأقل";return}
-  if(!$("f").value||!$("t").value||mins($("t").value)<=mins($("f").value)){er.hidden=false;er.textContent="ظبط وقت البداية والنهاية";return}
-  var rec={id:editId||String(Date.now()),name:n,spec:$("s").value.trim(),place:$("p").value.trim(),area:fArea,desc:$("d").value.trim(),map:$("m").value.trim(),days:picked.slice(),from:$("f").value,to:$("t").value,metAt:null};
+  var n=$("n").value.trim(),er=$("ferr"),ks=ORDER.filter(function(i){return sch[i]});
+  function bad(t){er.hidden=false;er.textContent=t}
+  if(!n)return bad("اكتب اسم الدكتور");
+  if(!ks.length)return bad("اختار يوم واحد على الأقل");
+  for(var j=0;j<ks.length;j++){var c=sch[ks[j]];if(!c.from||!c.to||mins(c.to)<=mins(c.from))return bad("ظبط وقت يوم "+DN[ks[j]])}
+  var rec={id:editId||String(Date.now()),name:n,spec:$("s").value.trim(),place:$("p").value.trim(),area:fArea,desc:$("d").value.trim(),map:$("m").value.trim(),sched:JSON.parse(JSON.stringify(sch)),days:ks,from:sch[ks[0]].from,to:sch[ks[0]].to,metAt:null};
   if(editId){S.docs=S.docs.map(function(d){if(d.id==editId){rec.metAt=d.metAt||null;return rec}return d})}else S.docs.push(rec);
   editId=null;$("sheet").hidden=true;persist();render();
 };
