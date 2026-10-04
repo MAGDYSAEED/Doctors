@@ -73,6 +73,7 @@ input{width:100%;font:inherit;padding:12px;border:1px solid var(--line);border-r
 summary{margin-top:14px;color:var(--mut);font-size:14px;cursor:pointer}
 .dr{display:flex;justify-content:space-between;padding:7px 0;border-top:1px solid var(--line);font-size:14px;color:var(--mut)}.dr.td{color:var(--ink);font-weight:700}
 .tr{display:flex;align-items:center;gap:8px;margin-top:8px}.tr b{width:62px;flex:none;font-size:14px}.tr span{flex:1;font-size:12px;color:var(--mut)}.tr input{padding:9px}
+.ago{font-size:12px;color:var(--mut);margin-top:5px}.ago.l{color:var(--off)}.star{color:var(--amb);margin-inline-start:5px}.away .stt{color:var(--off)}.away .stt i{background:var(--off)}.fl{display:flex;gap:6px;overflow-x:auto;padding:0 0 8px}.vh{margin-top:10px;font-size:13px;color:var(--mut)}.vh div{padding:4px 0;border-top:1px solid var(--line)}.vn{margin-top:10px;padding:9px}
 .save{width:100%;margin-top:18px;background:var(--pri);color:#fff;border:0;border-radius:14px;padding:15px;font-size:16px;font-weight:700;cursor:pointer}
 #login{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:24px}
 #login[hidden]{display:none}#login h2{margin:0;font-size:26px}#login p{margin:0;color:var(--mut)}
@@ -84,8 +85,10 @@ summary{margin-top:14px;color:var(--mut);font-size:14px;cursor:pointer}
 <div class="top"><div class="r1"><div><div class="clk" id="clk"></div><div class="dt" id="today"></div></div><button class="ic" id="menu" aria-label="الإعدادات">⋯</button></div>
 <div class="sum"><div><b id="sN">0</b><span>موجودين دلوقتي</span></div><div><b id="sM">0</b><span>اتقابلوا</span></div><div><b id="sT">0</b><span>الإجمالي</span></div></div></div>
 <div class="note" id="note" hidden></div>
+<div class="mbox" id="rem" hidden></div>
 <input class="srch" id="q" type="search" placeholder="ابحث بالاسم أو التخصص أو المكان">
 <div class="areas" id="areas"></div>
+<div class="fl" id="fl"></div>
 <div class="mbox" id="metbox" hidden></div>
 <div id="list"></div>
 <button class="fab" id="fab" aria-label="إضافة دكتور">+</button>
@@ -97,15 +100,18 @@ summary{margin-top:14px;color:var(--mut);font-size:14px;cursor:pointer}
   <label>المكان (عيادة / مستشفى)</label><input id="p" autocomplete="off">
   <label>أيام التواجد</label><div class="wrap" style="margin-bottom:6px"><button class="chip add" id="pAll">كل الأيام</button><button class="chip add" id="pNF">عدا الجمعة</button></div><div class="wrap" id="days"></div>
   <div id="tms"></div>
-  <details><summary>تفاصيل إضافية</summary><label>وصف المكان</label><input id="d" placeholder="الدور التالت، فوق الصيدلية"><label>لينك جوجل ماب</label><input id="m" type="url" inputmode="url" placeholder="https://maps.app.goo.gl/..."></details>
+  <details><summary>تفاصيل إضافية</summary><label>رقم التليفون</label><input id="ph" type="tel" inputmode="tel" placeholder="01xxxxxxxxx"><label>ملاحظات عامة</label><input id="nt" placeholder="مثلًا: بيفضل الصبح"><div class="wrap" style="margin-top:12px"><button class="chip" id="stB">⭐ دكتور مهم</button></div><label>وصف المكان</label><input id="d" placeholder="الدور التالت، فوق الصيدلية"><label>لينك جوجل ماب</label><input id="m" type="url" inputmode="url" placeholder="https://maps.app.goo.gl/..."><div class="wrap" style="margin-top:10px"><button class="chip" id="locB">📍 سجل موقعي الحالي للعيادة</button></div></details>
   <div class="err" id="ferr" hidden></div>
   <button class="save" id="save">حفظ</button>
   <button class="b" id="cl1" style="width:100%;margin-top:8px">إلغاء</button>
 </div></div>
 <div class="ov" id="set" hidden><div class="sheet"><h2>الإعدادات</h2>
   <label>تظبيط الساعة (لو فيه فرق عن موبايلك)</label><div class="btns" style="align-items:center;margin-top:0"><button class="b" id="oM">-</button><b id="oV" style="min-width:28px;text-align:center">0</b><button class="b" id="oP">+</button><span style="color:var(--mut);font-size:13px">ساعة</span></div>
+  <label>ملخص الزيارات</label><div class="vh" id="wk" style="margin-top:0"></div>
   <label>النسخ الاحتياطي والحساب</label>
   <div class="btns"><button class="b" id="exp">تصدير نسخة احتياطية</button><label class="b" style="margin:0;color:var(--ink);font-size:14px">استيراد<input type="file" id="imp" accept=".json" hidden></label><button class="b del" id="out" style="margin-inline-start:0">تسجيل خروج</button></div>
+  <label>نسخة احتياطية تلقائية على الجهاز (كل أسبوع)</label><div class="vh" id="bk" style="margin-top:0"></div><div class="btns"><button class="b" id="rst">استرجاع آخر نسخة</button></div>
+  <label>التذكيرات</label><div class="btns" style="margin-top:0"><button class="b" id="ntf">تفعيل إشعارات الوصول</button></div>
   <button class="b" id="cl2" style="width:100%;margin-top:16px">إغلاق</button>
 </div></div>
 <div id="login"><h2>🩺 مواعيد الدكاترة</h2><p id="lmsg">جاري التحميل...</p><button id="gbtn" hidden>الدخول بحساب جوجل</button></div>
@@ -115,8 +121,8 @@ var SPEC=["باطنة","قلب","عظام","أطفال","نساء وتوليد",
 var OFF=0;try{OFF=+localStorage.getItem("clk-off")||0}catch(e){}
 function NW(){return new Date(Date.now()+OFF*36e5)}
 function showOff(){$("oV").textContent=(OFF>0?"+":"")+OFF}
-var S={areas:[],docs:[],specs:[],sel:"all"};
-var animNext=true,shown=false,pendDel=null,ref=null,ready=false,sch={},lastT={from:"10:00",to:"14:00"},editId=null,openId=null,fArea="",qs="";
+var S={areas:[],docs:[],specs:[],sel:"all",f:"all"};
+var UP=null,fLoc=null,animNext=true,shown=false,pendDel=null,ref=null,ready=false,sch={},lastT={from:"10:00",to:"14:00"},editId=null,openId=null,fArea="",qs="",fStar=false;
 function $(i){return document.getElementById(i)}
 function esc(s){var e=document.createElement("div");e.textContent=s==null?"":s;return e.innerHTML.replace(/"/g,"&quot;")}
 function mins(s){var p=String(s||"0:0").split(":");return +p[0]*60+ +p[1]}
@@ -129,6 +135,7 @@ $("clk").innerHTML=(h%12||12)+":"+z(n.getMinutes())+"<small>"+z(n.getSeconds())+
 var dd=n.toDateString();if(dd!==lastDay){lastDay=dd;render()}}
 function sc(d){if(d.sched)return d.sched;var o={};(d.days||[]).forEach(function(i){o[i]={from:d.from,to:d.to}});return o}
 function st(d,now){
+  if(d.away&&now.getTime()<d.away)return{k:"away",t:"في إجازة، يرجع يوم "+DN[new Date(d.away).getDay()],r:3,f:0};
   var q=sc(d),m=now.getHours()*60+now.getMinutes(),w0=now.getDay(),c=q[w0];
   if(c){var f=mins(c.from),t=mins(c.to);
     if(m>=f&&m<t)return{k:"on",t:"موجود لحد "+f12(c.to),r:0,f:f};
@@ -145,6 +152,33 @@ function mapLink(d){
   if(d.map&&/^https?:\/\//i.test(d.map))return d.map;
   return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent([d.place,d.name,d.area,"الإسكندرية"].filter(Boolean).join(" "));
 }
+function lv(d){var t=d.metAt||0;(d.visits||[]).forEach(function(v){if(v.t>t)t=v.t});return t}
+function dAgo(t,now){var a=new Date(now.getTime());a.setHours(0,0,0,0);var b=new Date(t+OFF*36e5);b.setHours(0,0,0,0);return Math.round((a-b)/864e5)}
+function phn(p){var x=String(p||"").replace(/\D/g,"");if(x.indexOf("00")==0)x=x.slice(2);else if(x.charAt(0)=="0")x="20"+x.slice(1);return x}
+function callH(d){if(!d.phone)return"";return '<a class="b" href="tel:'+esc(d.phone)+'">اتصال</a><a class="b" target="_blank" rel="noopener" href="https://wa.me/'+phn(d.phone)+'">واتساب</a>'}
+function visH(d,now,met){var v=(d.visits||[]).slice().sort(function(a,b){return b.t-a.t}).slice(0,5),h="";
+  if(met){var tv=(d.visits||[]).filter(function(x){return metToday(x.t,now)}).pop();h+='<input class="vn" data-vn="'+esc(d.id)+'" placeholder="ملاحظة زيارة النهارده" value="'+esc(tv?tv.n:"")+'">'}
+  if(v.length)h+='<div class="vh">'+v.map(function(x){var q=new Date(x.t+OFF*36e5);return '<div>'+DN[q.getDay()]+" "+q.getDate()+"/"+(q.getMonth()+1)+" - "+t12(x.t)+(x.n?" - "+esc(x.n):"")+'</div>'}).join("")+'</div>';return h}
+function wkS(){var now=NW(),a=0,b=0,dd=[0,0,0,0,0,0,0];S.docs.forEach(function(d){(d.visits||[]).forEach(function(v){var g=dAgo(v.t,now);if(g<7)a++;if(g<30){b++;dd[new Date(v.t+OFF*36e5).getDay()]++}})});var mx=dd.indexOf(Math.max.apply(null,dd));$("wk").innerHTML=b?"<div>آخر 7 أيام: "+a+" زيارة</div><div>آخر 30 يوم: "+b+" زيارة</div><div>أنشط يوم: "+DN[mx]+"</div>":"لسه مفيش زيارات متسجلة"}
+function nt(t){var n=$("note");n.hidden=false;n.textContent=t}
+function getPos(){if(!navigator.geolocation){nt("الموقع مش مدعوم");return}navigator.geolocation.getCurrentPosition(function(p){UP={lat:p.coords.latitude,lng:p.coords.longitude};render()},function(){nt("مقدرتش أحدد موقعك. فعّل صلاحية الموقع للمتصفح.")},{enableHighAccuracy:true,timeout:10000,maximumAge:60000})}
+function dist(d){if(!UP||d.lat==null||d.lng==null)return 1e9;var R=6371,r=Math.PI/180,a=(d.lat-UP.lat)*r,b=(d.lng-UP.lng)*r,x=Math.sin(a/2)*Math.sin(a/2)+Math.cos(UP.lat*r)*Math.cos(d.lat*r)*Math.sin(b/2)*Math.sin(b/2);return 2*R*Math.asin(Math.sqrt(x))}
+function nearT(d){if(S.f!="near"||!UP)return"";var k=dist(d);return k>=1e9?" - مفيش موقع متسجل":" - "+(k<1?Math.round(k*1000)+" م":k.toFixed(1)+" كم")}
+function remind(now){var el=$("rem"),on=ready?S.docs.filter(function(d){return st(d,now).k=="on"&&!metToday(d.metAt,now)}):[];
+  if(!on.length){el.hidden=true;el.innerHTML="";return}
+  el.hidden=false;el.innerHTML="<h3>🔔 وصلوا ولسه مقابلتهمش</h3>"+on.slice(0,5).map(function(d){return '<div class="mrow"><div><b>'+esc(d.name)+'</b><small>'+esc(d.place||d.area||d.spec||"")+'</small></div></div>'}).join("")+(on.length>5?'<small style="color:var(--mut)">و '+(on.length-5)+' كمان</small>':"");
+  if(!("Notification" in window)||Notification.permission!=="granted")return;
+  var day=now.toDateString(),sent={};try{sent=JSON.parse(localStorage.getItem("rem-sent")||"{}")}catch(e){}
+  if(sent.day!==day)sent={day:day,ids:[]};
+  var fresh=on.filter(function(d){return sent.ids.indexOf(d.id)<0});if(!fresh.length)return;
+  try{new Notification("وصلوا دلوقتي",{body:fresh.slice(0,3).map(function(d){return d.name}).join("، ")+(fresh.length>3?" و"+(fresh.length-3)+" كمان":"")})}catch(e){}
+  fresh.forEach(function(d){sent.ids.push(d.id)});try{localStorage.setItem("rem-sent",JSON.stringify(sent))}catch(e){}}
+function autoBak(){if(!shown||!S.docs.length)return;var t=0;try{t=+localStorage.getItem("bak-t")||0}catch(e){}
+  if(Date.now()-t<6048e5)return;
+  try{var o={t:Date.now(),areas:S.areas,docs:S.docs,specs:S.specs||[]};localStorage.setItem("bak-1",JSON.stringify(o));localStorage.setItem("bak-t",String(o.t))}catch(e){}}
+function bkS(){var o=null;try{o=JSON.parse(localStorage.getItem("bak-1"))}catch(e){}
+  $("bk").innerHTML=o?"<div>آخر نسخة: "+new Date(o.t).toLocaleDateString("ar-EG")+" - "+o.docs.length+" دكتور</div>":"لسه مفيش نسخة (بتتعمل تلقائيًا كل أسبوع)";
+  $("ntf").textContent=("Notification" in window&&Notification.permission==="granted")?"إشعارات الوصول مفعّلة":"تفعيل إشعارات الوصول"}
 function render(){
   var now=NW(),mt=S.docs.filter(function(d){return metToday(d.metAt,now)}).sort(function(a,b){return b.metAt-a.metAt});
   $("today").textContent=DN[now.getDay()]+" "+now.getDate()+"/"+(now.getMonth()+1);
@@ -154,19 +188,22 @@ function render(){
   S.areas.forEach(function(a){h+='<button class="chip'+(S.sel==a?" sel":"")+'" data-a="'+esc(a)+'">'+esc(a)+'</button>'});
   if(S.docs.some(function(d){return !d.area}))h+='<button class="chip'+(S.sel=="none"?" sel":"")+'" data-a="none">بدون منطقة</button>';
   $("areas").innerHTML=h+'<button class="chip add" id="addA">+ منطقة</button>';
+  var FL=[["all","الكل"],["on","موجودين دلوقتي"],["pend","لسه مقابلتهمش"],["star","⭐ المهمين"],["late","متأخرين"],["near","📍 الأقرب"]];
+  $("fl").innerHTML=FL.map(function(f){return '<button class="chip'+(S.f==f[0]?" sel":"")+'" data-fl="'+f[0]+'">'+f[1]+'</button>'}).join("");
   var mb=$("metbox");
   if(mt.length){mb.hidden=false;mb.innerHTML="<h3>✅ اتقابلوا النهارده</h3>"+mt.map(function(d){return '<div class="mrow"><div><b>'+esc(d.name)+'</b><small>'+esc(d.place||d.area||d.spec||"")+' - '+t12(d.metAt)+'</small></div><button class="b" data-m="'+esc(d.id)+'">تراجع</button></div>'}).join("")}else{mb.hidden=true;mb.innerHTML=""}
+  remind(now);autoBak();
   if(!ready){$("list").innerHTML='<div class="empty">جاري التحميل...</div>';return}
   var q=qs.trim().toLowerCase();
   var list=S.docs.filter(function(d){
     if(!(S.sel=="all"||(S.sel=="none"?!d.area:d.area==S.sel)))return false;
-    return !q||[d.name,d.spec,d.place,d.area,d.desc].join(" ").toLowerCase().indexOf(q)>=0;
-  }).map(function(d){return{d:d,s:st(d,now)}}).sort(function(a,b){return a.s.r-b.s.r||a.s.f-b.s.f});
+    return !q||[d.name,d.spec,d.place,d.area,d.desc,d.note,d.phone].join(" ").toLowerCase().indexOf(q)>=0;
+  }).map(function(d){return{d:d,s:st(d,now)}}).filter(function(o){var f=S.f,d=o.d;if(f=="on")return o.s.k=="on";if(f=="pend")return(o.s.k=="on"||o.s.k=="later")&&!metToday(d.metAt,now);if(f=="star")return !!d.star;if(f=="late"){var t=lv(d);return !t||dAgo(t,now)>=14}return true}).sort(function(a,b){if(S.f=="late")return lv(a.d)-lv(b.d);if(S.f=="near"&&UP)return dist(a.d)-dist(b.d);return a.s.r-b.s.r||(b.d.star?1:0)-(a.d.star?1:0)||a.s.f-b.s.f});
   if(!list.length){$("list").innerHTML='<div class="empty">'+(S.docs.length?"مفيش نتائج":"ضيف أول دكتور بزر +")+'</div>';return}
   $("list").innerHTML=list.map(function(o){
-    var d=o.d,s=o.s,id=esc(d.id),met=metToday(d.metAt,now),op=openId===d.id,x="";
-    if(op){x=(d.desc?'<div class="pl">'+esc(d.desc)+'</div>':"")+'<div class="dl">'+ORDER.filter(function(i){return sc(d)[i]}).map(function(i){var c=sc(d)[i];return '<div class="dr'+(i==now.getDay()?" td":"")+'"><span>'+DN[i]+'</span><span>'+f12(c.from)+' - '+f12(c.to)+'</span></div>'}).join("")+'</div><div class="btns"><a class="b p" target="_blank" rel="noopener" href="'+esc(mapLink(d))+'">الموقع</a><button class="b" data-e="'+id+'">تعديل</button><button class="b del" data-x="'+id+'">'+(pendDel===d.id?"تأكيد الحذف؟":"حذف")+'</button></div>'}
-    return '<div class="cd '+s.k+(met?" met":"")+'"><button class="ck" data-m="'+id+'" aria-label="اتقابل">'+(met?"✓":"")+'</button><div class="bd" data-o="'+id+'"><div class="nm">'+esc(d.name)+(d.spec?'<span class="sp">'+esc(d.spec)+'</span>':"")+'</div><div class="pl">'+esc(d.place||"")+(d.place&&d.area?" - ":"")+esc(d.area||"")+'</div><div class="stt"><i></i>'+esc(s.t)+(met?" - اتقابل "+t12(d.metAt):"")+'</div>'+x+'</div></div>'
+    var d=o.d,s=o.s,id=esc(d.id),met=metToday(d.metAt,now),op=openId===d.id,x="",lt=lv(d),ag=lt?dAgo(lt,now):-1,agT=ag<0?"لسه مقابلتوش":(ag==0?"":(ag==1?"آخر زيارة امبارح":"آخر زيارة من "+ag+" يوم"));
+    if(op){var vis=visH(d,now,met),call=callH(d),aw=d.away&&now.getTime()<d.away;x=(d.desc?'<div class="pl">'+esc(d.desc)+'</div>':"")+(d.note?'<div class="pl">'+esc(d.note)+'</div>':"")+'<div class="dl">'+ORDER.filter(function(i){return sc(d)[i]}).map(function(i){var c=sc(d)[i];return '<div class="dr'+(i==now.getDay()?" td":"")+'"><span>'+DN[i]+'</span><span>'+f12(c.from)+' - '+f12(c.to)+'</span></div>'}).join("")+'</div>'+vis+'<div class="btns"><a class="b p" target="_blank" rel="noopener" href="'+esc(mapLink(d))+'">الموقع</a>'+call+'<button class="b" data-aw="'+id+'">'+(aw?"رجع من الإجازة":"إجازة")+'</button><button class="b" data-e="'+id+'">تعديل</button><button class="b del" data-x="'+id+'">'+(pendDel===d.id?"تأكيد الحذف؟":"حذف")+'</button></div>'}
+    return '<div class="cd '+s.k+(met?" met":"")+'"><button class="ck" data-m="'+id+'" aria-label="اتقابل">'+(met?"✓":"")+'</button><div class="bd" data-o="'+id+'"><div class="nm">'+esc(d.name)+(d.star?'<span class="star">★</span>':"")+(d.spec?'<span class="sp">'+esc(d.spec)+'</span>':"")+'</div><div class="pl">'+esc(d.place||"")+(d.place&&d.area?" - ":"")+esc(d.area||"")+nearT(d)+'</div><div class="stt"><i></i>'+esc(s.t)+(met?" - اتقابل "+t12(d.metAt):"")+'</div>'+(agT?'<div class="ago'+(ag<0||ag>=14?" l":"")+'">'+agT+'</div>':"")+x+'</div></div>'
   }).join("");
   animNext=false;
 }
@@ -183,10 +220,10 @@ function setDays(a){var o={};a.forEach(function(i){o[i]=sch[i]||{from:lastT.from
 $("tms").oninput=function(e){var T=e.target,f=T.getAttribute("data-tf"),t=T.getAttribute("data-tt"),k=f!==null?f:t;if(k===null)return;if(f!==null)sch[k].from=T.value;else sch[k].to=T.value;lastT={from:sch[k].from,to:sch[k].to}};
 function openForm(id){
   editId=null;$("ferr").hidden=true;
-  ["n","s","p","d","m"].forEach(function(i){$(i).value=""});sch={};fArea=S.areas.indexOf(S.sel)>=0?S.sel:"";
+  ["n","s","p","d","m","ph","nt"].forEach(function(i){$(i).value=""});fStar=false;fLoc=null;sch={};fArea=S.areas.indexOf(S.sel)>=0?S.sel:"";
   $("ftitle").textContent="دكتور جديد";
-  S.docs.forEach(function(d){if(d.id==id){editId=d.id;$("n").value=d.name;$("s").value=d.spec||"";$("p").value=d.place||"";$("d").value=d.desc||"";$("m").value=d.map||"";sch=JSON.parse(JSON.stringify(sc(d)));fArea=d.area||"";$("ftitle").textContent="تعديل دكتور"}});
-  drawForm();$("sheet").hidden=false;if(!editId)setTimeout(function(){$("n").focus()},300);
+  S.docs.forEach(function(d){if(d.id==id){editId=d.id;$("n").value=d.name;$("s").value=d.spec||"";$("p").value=d.place||"";$("d").value=d.desc||"";$("m").value=d.map||"";$("ph").value=d.phone||"";$("nt").value=d.note||"";fStar=!!d.star;fLoc=d.lat!=null?{lat:d.lat,lng:d.lng}:null;sch=JSON.parse(JSON.stringify(sc(d)));fArea=d.area||"";$("ftitle").textContent="تعديل دكتور"}});
+  $("stB").classList.toggle("sel",fStar);$("locB").textContent=fLoc?"📍 الموقع متسجل (اضغط للتحديث)":"📍 سجل موقعي الحالي للعيادة";document.querySelector("#sheet details").open=!!($("ph").value||$("nt").value||$("d").value||$("m").value);drawForm();$("sheet").hidden=false;if(!editId)setTimeout(function(){$("n").focus()},300);
 }
 function addArea(inForm){
   var n=(prompt("اسم المنطقة")||"").trim();if(!n)return;
@@ -196,13 +233,15 @@ function addArea(inForm){
 }
 document.addEventListener("click",function(e){
   var T=e.target,i=T.id,g=function(k){var n=T.closest("["+k+"]");return n?n.getAttribute(k):null};
-  var m=g("data-m"),x=g("data-x"),ed=g("data-e"),ds=g("data-d"),sp=g("data-sp"),ar=g("data-ar"),a=g("data-a"),o=g("data-o");
-  if(m!==null){S.docs.forEach(function(d){if(d.id==m)d.metAt=metToday(d.metAt)?null:Date.now()});persist();render();return}
+  var m=g("data-m"),x=g("data-x"),ed=g("data-e"),ds=g("data-d"),sp=g("data-sp"),ar=g("data-ar"),a=g("data-a"),o=g("data-o"),fl=g("data-fl"),aw=g("data-aw");
+  if(m!==null){S.docs.forEach(function(d){if(d.id==m){d.visits=d.visits||[];if(metToday(d.metAt)){if(!confirm("إلغاء علامة اتقابل لـ "+d.name+"؟ هيتشال تسجيل زيارة النهارده.")){return}d.visits=d.visits.filter(function(v){return !metToday(v.t)});d.metAt=null}else{d.metAt=Date.now();d.visits.push({t:d.metAt,n:""})}}});persist();render();return}
   if(x!==null){if(pendDel===x){S.docs=S.docs.filter(function(d){return d.id!=x});pendDel=null;persist();render()}else{pendDel=x;render();setTimeout(function(){if(pendDel===x){pendDel=null;render()}},4000)}return}
   if(ed!==null){openForm(ed);return}
   if(ds!==null){ds=+ds;if(sch[ds])delete sch[ds];else sch[ds]={from:lastT.from,to:lastT.to};drawForm();return}
   if(sp!==null){$("s").value=sp;return}
   if(ar!==null){fArea=ar;drawForm();return}
+  if(fl!==null){S.f=fl;if(fl=="near")getPos();render();return}
+  if(aw!==null){S.docs.forEach(function(d){if(d.id==aw){if(d.away&&NW().getTime()<d.away)d.away=null;else{var n=parseInt(prompt("الدكتور في إجازة كام يوم؟","7"),10);if(n>0){var z=NW();z.setHours(0,0,0,0);d.away=z.getTime()+n*864e5}}}});persist();render();return}
   if(a!==null){S.sel=a;render();return}
   if(o!==null){openId=openId===o?null:o;render();return}
   if(i=="pAll")setDays([0,1,2,3,4,5,6]);
@@ -210,12 +249,17 @@ document.addEventListener("click",function(e){
   else if(i=="cpT"){var ks=ORDER.filter(function(k){return sch[k]}),c=sch[ks[0]];ks.forEach(function(k){sch[k]={from:c.from,to:c.to}});drawForm()}
   else if(i=="addA")addArea(false);
   else if(i=="addF")addArea(true);
+  else if(i=="stB"){fStar=!fStar;T.classList.toggle("sel",fStar)}
+  else if(i=="locB"){if(!navigator.geolocation)return;T.textContent="جاري تحديد الموقع...";navigator.geolocation.getCurrentPosition(function(p){fLoc={lat:p.coords.latitude,lng:p.coords.longitude};T.textContent="📍 الموقع متسجل (اضغط للتحديث)"},function(){T.textContent="📍 تعذر تحديد الموقع، جرّب تاني"},{enableHighAccuracy:true,timeout:10000})}
+  else if(i=="ntf"){if(!("Notification" in window)){nt("المتصفح ده مش بيدعم الإشعارات");return}Notification.requestPermission().then(function(){bkS();render()})}
+  else if(i=="rst"){var bo=null;try{bo=JSON.parse(localStorage.getItem("bak-1"))}catch(er){}if(!bo){nt("مفيش نسخة تلقائية لسه");$("set").hidden=true;return}if(!confirm("هترجع بيانات "+new Date(bo.t).toLocaleDateString("ar-EG")+" ("+bo.docs.length+" دكتور) وهتحل محل الحالية. متأكد؟"))return;try{localStorage.setItem("bak-pre",JSON.stringify({t:Date.now(),areas:S.areas,docs:S.docs,specs:S.specs||[]}))}catch(er){}S.areas=bo.areas;S.docs=bo.docs;S.specs=bo.specs||[];persist();$("set").hidden=true;render()}
   else if(i=="fab")openForm();
-  else if(i=="menu"){showOff();$("set").hidden=false}
+  else if(i=="menu"){showOff();wkS();bkS();$("set").hidden=false}
   else if(i=="oM"||i=="oP"){OFF+=i=="oP"?1:-1;try{localStorage.setItem("clk-off",OFF)}catch(e){}showOff();tick();render()}
   else if(i=="cl1"||i=="sheet")$("sheet").hidden=true;
   else if(i=="cl2"||i=="set")$("set").hidden=true;
 });
+document.addEventListener("change",function(e){var T=e.target,id=T.getAttribute?T.getAttribute("data-vn"):null;if(id===null)return;S.docs.forEach(function(d){if(d.id==id){d.visits=d.visits||[];var tv=d.visits.filter(function(x){return metToday(x.t)}).pop();if(!tv){tv={t:d.metAt||Date.now(),n:""};d.visits.push(tv)}tv.n=T.value.trim()}});persist();render()});
 $("q").oninput=function(){qs=this.value;render()};
 $("save").onclick=function(){
   var n=$("n").value.trim(),er=$("ferr"),ks=ORDER.filter(function(i){return sch[i]});
@@ -223,8 +267,8 @@ $("save").onclick=function(){
   if(!n)return bad("اكتب اسم الدكتور");
   if(!ks.length)return bad("اختار يوم واحد على الأقل");
   for(var j=0;j<ks.length;j++){var c=sch[ks[j]];if(!c.from||!c.to||mins(c.to)<=mins(c.from))return bad("ظبط وقت يوم "+DN[ks[j]])}
-  var rec={id:editId||String(Date.now()),name:n,spec:$("s").value.trim(),place:$("p").value.trim(),area:fArea,desc:$("d").value.trim(),map:$("m").value.trim(),sched:JSON.parse(JSON.stringify(sch)),days:ks,from:sch[ks[0]].from,to:sch[ks[0]].to,metAt:null};
-  if(editId){S.docs=S.docs.map(function(d){if(d.id==editId){rec.metAt=d.metAt||null;return rec}return d})}else S.docs.push(rec);
+  var rec={id:editId||String(Date.now()),name:n,spec:$("s").value.trim(),place:$("p").value.trim(),area:fArea,desc:$("d").value.trim(),map:$("m").value.trim(),sched:JSON.parse(JSON.stringify(sch)),days:ks,from:sch[ks[0]].from,to:sch[ks[0]].to,phone:$("ph").value.trim(),note:$("nt").value.trim(),star:fStar,lat:fLoc?fLoc.lat:null,lng:fLoc?fLoc.lng:null,visits:[],away:null,metAt:null};
+  if(editId){S.docs=S.docs.map(function(d){if(d.id==editId){rec.metAt=d.metAt||null;rec.visits=d.visits||[];rec.away=d.away||null;return rec}return d})}else S.docs.push(rec);
   var sp=rec.spec;if(sp){S.specs=S.specs||[];if(S.specs.indexOf(sp)<0&&SPEC.indexOf(sp)<0)S.specs.push(sp)}
   editId=null;$("sheet").hidden=true;persist();render();
 };
