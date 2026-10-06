@@ -163,10 +163,12 @@ function sc(d){if(d.sched)return d.sched;var o={};(d.days||[]).forEach(function(
 function st(d,now){
   if(d.away&&now.getTime()<d.away)return{k:"away",t:"في إجازة، يرجع يوم "+DN[new Date(d.away).getDay()],r:3,f:0};
   var q=sc(d),m=now.getHours()*60+now.getMinutes(),w0=now.getDay(),c=q[w0];
-  if(c){var f=mins(c.from),t=mins(c.to);
-    if(m>=f&&m<t)return{k:"on",t:"موجود لحد "+f12(c.to),r:0,f:f};
-    if(m<f)return{k:"later",t:"يوصل النهارده "+f12(c.from),r:1,f:f}}
-  for(var i=1;i<=7;i++){var w=(w0+i)%7,n=q[w];if(n)return{k:"off",t:(c?"خلص. ":"")+"الجاي: "+(i==1?"بكرة":DN[w])+" "+f12(n.from),r:2,f:mins(n.from)}}
+  if(c){var P=pr(c),lt=null;
+    for(var j=0;j<P.length;j++){var f=mins(P[j][0]),t=mins(P[j][1]);
+      if(m>=f&&m<t)return{k:"on",t:"موجود لحد "+f12(P[j][1]),r:0,f:f};
+      if(m<f&&!lt)lt=P[j]}
+    if(lt)return{k:"later",t:"يوصل النهارده "+f12(lt[0]),r:1,f:mins(lt[0])}}
+  for(var i=1;i<=7;i++){var w=(w0+i)%7,n=q[w];if(n)return{k:"off",t:(c?"خلص. ":"")+"الجاي: "+(i==1?"بكرة":DN[w])+" "+f12(pr(n)[0][0]),r:2,f:mins(pr(n)[0][0])}}
   return{k:"off",t:"مفيش أيام",r:3,f:0}
 }
 function localLoad(){try{var r=localStorage.getItem("docs-v1");if(r)return JSON.parse(r)}catch(e){}return null}
@@ -228,7 +230,7 @@ function txTime(tm,w){var a=th(tm[1],tm[2],tm[3]),b=th(tm[4],tm[5],tm[6]),nm=!tm
 function txSched(val,w){var sch={},pend=[];
   String(val||"").split(/[\n،,؛;|]+/).forEach(function(seg){seg=seg.trim();if(!seg)return;
     var tm=TR.exec(seg),ds=txDays(tm?seg.replace(TR," "):seg),t=tm?txTime(tm,w):null;
-    if(tm){if(!t)return;var all=pend.concat(ds);pend=[];if(!all.length){w.push("وقت من غير يوم: "+seg);return}all.forEach(function(d){sch[d]={from:t[0],to:t[1]}})}
+    if(tm){if(!t)return;var all=pend.concat(ds);pend=[];if(!all.length){w.push("وقت من غير يوم: "+seg);return}all.forEach(function(d){var c=sch[d];if(!c)sch[d]={from:t[0],to:t[1]};else if(!c.from2){c.from2=t[0];c.to2=t[1]}else w.push("أكتر من فترتين يوم "+DN[d]+"، اتحفظ أول فترتين")})}
     else if(ds.length)pend=pend.concat(ds);
     else w.push("مش فاهم: "+seg)});
   if(pend.length)w.push("أيام من غير ميعاد");
@@ -253,8 +255,8 @@ function txParse(t){
     if(name)seen[key]=1;
     if(!why&&!ks.length)w.push("ناقص مواعيد");
     return {rec:rec,sel:!why&&ks.length>0,dup:!!why,why:why,w:w}})}
-function txSum(r){var g={},o=[];ORDER.forEach(function(i){var c=r.sched[i];if(c){var k=c.from+"|"+c.to;if(!g[k]){g[k]=[];o.push(k)}g[k].push(SH[i])}});
-  return o.map(function(k){var p=k.split("|");return g[k].join(" و")+" "+f12(p[0])+" - "+f12(p[1])}).join(" / ")}
+function txSum(r){var g={},o=[];ORDER.forEach(function(i){var c=r.sched[i];if(c){var k=perT(c);if(!g[k]){g[k]=[];o.push(k)}g[k].push(SH[i])}});
+  return o.map(function(k){return g[k].join(" و")+" "+k}).join(" / ")}
 function txDraw(){var o=$("txout"),ok=$("txOk");
   if(!TX.length){o.innerHTML='<div class="empty">مفيش دكاترة اتقرّوا. اتأكد إن كل دكتور فيه سطر "الاسم:".</div>';ok.hidden=true;return}
   var n=TX.filter(function(x){return x.sel&&!x.dup}).length;
@@ -268,6 +270,8 @@ function txAdd(){var add=TX.filter(function(x){return x.sel&&!x.dup}).map(functi
   add.forEach(function(r){if(r.area&&S.areas.indexOf(r.area)<0)S.areas.push(r.area);if(r.spec){S.specs=S.specs||[];if(S.specs.indexOf(r.spec)<0&&SPEC.indexOf(r.spec)<0)S.specs.push(r.spec)}});
   S.docs=S.docs.concat(add);persist();TX=[];$("txin").value="";$("txout").innerHTML="";$("txOk").hidden=true;$("txv").hidden=true;render()}
 /*TX-END*/
+function pr(c){var a=[[c.from,c.to]];if(c.from2&&c.to2)a.push([c.from2,c.to2]);return a.sort(function(x,y){return mins(x[0])-mins(y[0])})}
+function perT(c){return pr(c).map(function(p){return f12(p[0])+" - "+f12(p[1])}).join(" و ")}
 var CKI='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 function spS(t){var h=0,x=String(t||"");for(var i=0;i<x.length;i++)h=(h*31+x.charCodeAt(i))%360;return "--h:"+h}
 function dayP(d,now){var q=sc(d),L={6:"س",0:"ح",1:"ن",2:"ث",3:"ر",4:"خ",5:"ج"},w=now.getDay();return '<div class="dys">'+ORDER.map(function(i){var a=!!q[i];return '<i class="dy'+(a?" a":"")+(a&&i==w?" t":"")+'">'+L[i]+'</i>'}).join("")+'</div>'}
@@ -301,7 +305,7 @@ function render(){
   if(!list.length){$("list").innerHTML='<div class="empty">'+(S.docs.length?"مفيش نتائج":"ضيف أول دكتور بزر +")+'</div>';return}
   $("list").innerHTML=list.map(function(o,ix){
     var d=o.d,s=o.s,id=esc(d.id),met=metToday(d.metAt,now),op=openId===d.id,x="",lt=lv(d),ag=lt?dAgo(lt,now):-1,agT=ag<0?"لسه مقابلتوش":(ag==0?"":(ag==1?"آخر زيارة امبارح":"آخر زيارة من "+ag+" يوم"));
-    if(op){var vis=visH(d,now,met),call=callH(d),aw=d.away&&now.getTime()<d.away;x=(d.desc?'<div class="pl">'+esc(d.desc)+'</div>':"")+(d.note?'<div class="pl">'+esc(d.note)+'</div>':"")+'<div class="dl">'+ORDER.filter(function(i){return sc(d)[i]}).map(function(i){var c=sc(d)[i];return '<div class="dr'+(i==now.getDay()?" td":"")+'"><span>'+DN[i]+'</span><span>'+f12(c.from)+' - '+f12(c.to)+'</span></div>'}).join("")+'</div>'+vis+'<div class="btns"><a class="b p" target="_blank" rel="noopener" href="'+esc(mapLink(d))+'">الموقع</a>'+call+'<button class="b" data-aw="'+id+'">'+(aw?"رجع من الإجازة":"إجازة")+'</button><button class="b" data-e="'+id+'">تعديل</button><button class="b del" data-x="'+id+'">'+(pendDel===d.id?"تأكيد الحذف؟":"حذف")+'</button></div>'}
+    if(op){var vis=visH(d,now,met),call=callH(d),aw=d.away&&now.getTime()<d.away;x=(d.desc?'<div class="pl">'+esc(d.desc)+'</div>':"")+(d.note?'<div class="pl">'+esc(d.note)+'</div>':"")+'<div class="dl">'+ORDER.filter(function(i){return sc(d)[i]}).map(function(i){var c=sc(d)[i];return '<div class="dr'+(i==now.getDay()?" td":"")+'"><span>'+DN[i]+'</span><span>'+perT(c)+'</span></div>'}).join("")+'</div>'+vis+'<div class="btns"><a class="b p" target="_blank" rel="noopener" href="'+esc(mapLink(d))+'">الموقع</a>'+call+'<button class="b" data-aw="'+id+'">'+(aw?"رجع من الإجازة":"إجازة")+'</button><button class="b" data-e="'+id+'">تعديل</button><button class="b del" data-x="'+id+'">'+(pendDel===d.id?"تأكيد الحذف؟":"حذف")+'</button></div>'}
     return '<div class="cd '+s.k+(met?" met":"")+(animNext?" an":"")+(popId===d.id?" pop":"")+'" style="--i:'+Math.min(ix,9)+'"><button class="ck" data-m="'+id+'" aria-label="اتقابل">'+(met?CKI:"")+'</button><div class="bd" data-o="'+id+'"><div class="nm">'+esc(d.name)+(d.star?'<span class="star">★</span>':"")+(d.spec?'<span class="sp" style="'+spS(d.spec)+'">'+esc(d.spec)+'</span>':"")+'</div><div class="pl">'+esc(d.place||"")+(d.place&&d.area?" - ":"")+esc(d.area||"")+nearT(d)+'</div>'+dayP(d,now)+'<div class="stt"><i></i>'+esc(s.t)+(met?" - اتقابل "+t12(d.metAt):"")+'</div>'+(agT?'<div class="ago'+(ag<0||ag>=14?" l":"")+'">'+agT+'</div>':"")+x+'</div></div>'
   }).join("");
   animNext=false;popId=null;
@@ -314,9 +318,10 @@ function drawForm(){
   $("days").innerHTML=ORDER.map(function(i){return '<button class="chip'+(sch[i]?" sel":"")+'" data-d="'+i+'">'+SH[i]+'</button>'}).join("");
 }
 function drawT(){var ks=ORDER.filter(function(i){return sch[i]});
-  $("tms").innerHTML=(ks.length?'<div class="tr"><b></b><span>من</span><span>إلى</span></div>':"")+ks.map(function(i){return '<div class="tr"><b>'+DN[i]+'</b><input type="time" data-tf="'+i+'" value="'+sch[i].from+'"><input type="time" data-tt="'+i+'" value="'+sch[i].to+'"></div>'}).join("")+(ks.length>1?'<button class="chip add" id="cpT" style="margin-top:10px">نفس وقت '+DN[ks[0]]+' لكل الأيام</button>':"")}
+  $("tms").innerHTML=(ks.length?'<div class="tr"><b></b><span>من</span><span>إلى</span></div>':"")+ks.map(function(i){var c=sch[i],r='<div class="tr"><b>'+DN[i]+'</b><input type="time" data-tf="'+i+'" value="'+c.from+'"><input type="time" data-tt="'+i+'" value="'+c.to+'">'+(c.from2?'':'<button class="chip add" data-a2="'+i+'" aria-label="فترة تانية" style="padding:8px 13px">+</button>')+'</div>';
+  if(c.from2)r+='<div class="tr"><b></b><input type="time" data-tf2="'+i+'" value="'+c.from2+'"><input type="time" data-tt2="'+i+'" value="'+(c.to2||"")+'"><button class="chip add" data-r2="'+i+'" aria-label="حذف الفترة" style="padding:8px 13px">×</button></div>';return r}).join("")+(ks.length>1?'<button class="chip add" id="cpT" style="margin-top:10px">نفس وقت '+DN[ks[0]]+' لكل الأيام</button>':"")}
 function setDays(a){var o={};a.forEach(function(i){o[i]=sch[i]||{from:lastT.from,to:lastT.to}});sch=o;drawForm()}
-$("tms").oninput=function(e){var T=e.target,f=T.getAttribute("data-tf"),t=T.getAttribute("data-tt"),k=f!==null?f:t;if(k===null)return;if(f!==null)sch[k].from=T.value;else sch[k].to=T.value;lastT={from:sch[k].from,to:sch[k].to}};
+$("tms").oninput=function(e){var T=e.target,f2=T.getAttribute("data-tf2"),t2=T.getAttribute("data-tt2");if(f2!==null){sch[f2].from2=T.value;return}if(t2!==null){sch[t2].to2=T.value;return}var f=T.getAttribute("data-tf"),t=T.getAttribute("data-tt"),k=f!==null?f:t;if(k===null)return;if(f!==null)sch[k].from=T.value;else sch[k].to=T.value;lastT={from:sch[k].from,to:sch[k].to}};
 function openForm(id){
   editId=null;$("ferr").hidden=true;
   ["n","s","p","d","m","ph","nt"].forEach(function(i){$(i).value=""});fStar=false;fLoc=null;sch={};fArea=S.areas.indexOf(S.sel)>=0?S.sel:"";
@@ -333,6 +338,7 @@ function addArea(inForm){
 document.addEventListener("click",function(e){
   var T=e.target,i=T.id||((T.closest&&T.closest("button[id]"))||{}).id||"",g=function(k){var n=T.closest("["+k+"]");return n?n.getAttribute(k):null};
   var m=g("data-m"),x=g("data-x"),ed=g("data-e"),ds=g("data-d"),sp=g("data-sp"),ar=g("data-ar"),a=g("data-a"),o=g("data-o"),fl=g("data-fl"),aw=g("data-aw");
+  var a2=g("data-a2"),r2=g("data-r2");if(a2!==null){sch[a2].from2="17:00";sch[a2].to2="21:00";drawT();return}if(r2!==null){delete sch[r2].from2;delete sch[r2].to2;drawT();return}
   var tq=g("data-tx");if(tq!==null){TX[+tq].sel=!TX[+tq].sel;txDraw();return}
   if(T.closest("#sMb,#navM")){$("metv").hidden=false;return}
   if(m!==null){S.docs.forEach(function(d){if(d.id==m){d.visits=d.visits||[];if(metToday(d.metAt)){if(!confirm("إلغاء علامة اتقابل لـ "+d.name+"؟ هيتشال تسجيل زيارة النهارده.")){return}d.visits=d.visits.filter(function(v){return !metToday(v.t)});d.metAt=null}else{d.metAt=Date.now();popId=d.id;d.visits.push({t:d.metAt,n:""})}}});persist();render();return}
@@ -347,7 +353,7 @@ document.addEventListener("click",function(e){
   if(o!==null){openId=openId===o?null:o;render();return}
   if(i=="pAll")setDays([0,1,2,3,4,5,6]);
   else if(i=="pNF")setDays([6,0,1,2,3,4]);
-  else if(i=="cpT"){var ks=ORDER.filter(function(k){return sch[k]}),c=sch[ks[0]];ks.forEach(function(k){sch[k]={from:c.from,to:c.to}});drawForm()}
+  else if(i=="cpT"){var ks=ORDER.filter(function(k){return sch[k]}),c=sch[ks[0]];ks.forEach(function(k){sch[k]={from:c.from,to:c.to};if(c.from2){sch[k].from2=c.from2;sch[k].to2=c.to2}});drawForm()}
   else if(i=="addA")addArea(false);
   else if(i=="addF")addArea(true);
   else if(i=="stB"){fStar=!fStar;T.classList.toggle("sel",fStar)}
@@ -373,7 +379,7 @@ $("save").onclick=function(){
   function bad(t){er.hidden=false;er.textContent=t}
   if(!n)return bad("اكتب اسم الدكتور");
   if(!ks.length)return bad("اختار يوم واحد على الأقل");
-  for(var j=0;j<ks.length;j++){var c=sch[ks[j]];if(!c.from||!c.to||mins(c.to)<=mins(c.from))return bad("ظبط وقت يوم "+DN[ks[j]])}
+  for(var j=0;j<ks.length;j++){var c=sch[ks[j]];if(!c.from||!c.to||mins(c.to)<=mins(c.from))return bad("ظبط وقت يوم "+DN[ks[j]]);if(c.from2&&(!c.to2||mins(c.to2)<=mins(c.from2)))return bad("ظبط الفترة التانية يوم "+DN[ks[j]])}
   var rec={id:editId||String(Date.now()),name:n,spec:$("s").value.trim(),place:$("p").value.trim(),area:fArea,desc:$("d").value.trim(),map:$("m").value.trim(),sched:JSON.parse(JSON.stringify(sch)),days:ks,from:sch[ks[0]].from,to:sch[ks[0]].to,phone:$("ph").value.trim(),note:$("nt").value.trim(),star:fStar,lat:fLoc?fLoc.lat:null,lng:fLoc?fLoc.lng:null,visits:[],away:null,metAt:null};
   if(editId){S.docs=S.docs.map(function(d){if(d.id==editId){rec.metAt=d.metAt||null;rec.visits=d.visits||[];rec.away=d.away||null;return rec}return d})}else S.docs.push(rec);
   var sp=rec.spec;if(sp){S.specs=S.specs||[];if(S.specs.indexOf(sp)<0&&SPEC.indexOf(sp)<0)S.specs.push(sp)}
