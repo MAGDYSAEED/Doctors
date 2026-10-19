@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0f1b2d">
+<meta name="theme-color" content="#6d4aff">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <title>مواعيد الدكاترة</title>
@@ -258,6 +258,60 @@ html{background:var(--bg)}
 .cc.sel{border-color:var(--pri);background:color-mix(in srgb,var(--pri) 12%,transparent)}
 #b_allow,#b_bal,#b_lim,#b_days,#b_spent,#b_plan,#b_proj{direction:ltr;unicode-bidi:isolate}
 #b_inc{color:var(--on);border-color:var(--on)}
+/* ---- شبابي: ألوان قوية، مسطّح، بدون ظلال ---- */
+:root{--bg:#f4f0ff;--card:#ffffff;--card2:#ece6ff;--ink:#1b1240;--mut:#6e639b;--line:#ddd3ff;--pri:#7c5cff;--on:#0aa575;--amb:#d99a00;--off:#e8325a;--pink:#ff4d8d}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e0b1e;--card:#19152e;--card2:#221d3d;--ink:#f5f2ff;--mut:#a39bd0;--line:#2e2750;--pri:#7c5cff;--on:#2de2a6;--amb:#ffd23f;--off:#ff5a7a;--pink:#ff4d8d}}
+:root[data-theme="dark"]{--bg:#0e0b1e;--card:#19152e;--card2:#221d3d;--ink:#f5f2ff;--mut:#a39bd0;--line:#2e2750;--pri:#7c5cff;--on:#2de2a6;--amb:#ffd23f;--off:#ff5a7a;--pink:#ff4d8d}
+html{background:var(--bg)}
+.top{background:#6d4aff;border:0;border-radius:26px;padding:16px 18px 14px}
+.clk{font-size:44px;font-weight:800}
+.dt{font-weight:600;opacity:.92}
+.ic{background:rgba(255,255,255,.2);border:0;border-radius:50%;width:42px;height:42px}
+.syn{background:rgba(255,255,255,.2)}
+.qt{background:rgba(0,0,0,.18);border:0;border-radius:999px;padding:8px 16px}
+.qt .qm b{font-size:22px;font-weight:800;color:#ffe66d}
+.srch{border:2px solid var(--line);border-radius:999px;height:52px;padding:0 20px;background:var(--card);font-weight:600}
+.filters select{border:2px solid var(--line);border-radius:999px;height:48px;font-weight:700;padding:0 16px}
+.cc{border:2px solid transparent;border-radius:22px;padding:12px 6px}
+.cc[data-fl="today"]{background:color-mix(in srgb,var(--pri) 16%,var(--card))}
+.cc[data-fl="on"]{background:color-mix(in srgb,var(--on) 16%,var(--card))}
+.cc[data-fl="met"]{background:color-mix(in srgb,var(--amb) 18%,var(--card))}
+.cc[data-fl="today"] b{color:var(--pri)}
+.cc b{font-size:32px;font-weight:800}
+.cc span{font-weight:700}
+.cc.sel[data-fl="today"]{border-color:var(--pri)}
+.cc.sel[data-fl="on"]{border-color:var(--on)}
+.cc.sel[data-fl="met"]{border-color:var(--amb)}
+.ct{font-weight:700}
+.cd{border-radius:24px;border:2px solid var(--line);padding:16px 16px 16px 14px}
+.cd::before{width:7px}
+.ck{width:50px;height:50px;border:3px solid var(--pri);background:transparent}
+.met .ck{background:var(--on);border-color:var(--on)}
+.nm{font-size:18px;font-weight:800}
+.sp2{font-weight:800;color:hsl(var(--h,260) 90% 62%)}
+.stt{font-weight:800}
+.fab{background:var(--pink);width:62px;height:62px;border-radius:50%;color:#fff}
+.nav{border-radius:999px;border:2px solid var(--line);padding:6px;background:var(--card)}
+.nv{border-radius:999px;font-weight:700;font-size:13px;padding:8px 2px}
+.nv .ni{font-size:22px;line-height:1.1}
+.nv.sel{background:var(--pri);color:#fff}
+.chip.sel,.b.p{background:var(--pri);border-color:var(--pri)}
+.save,.bbtn:not(.g){background:var(--pri);border-radius:999px;font-weight:800}
+.b{border-radius:999px}
+.ai{border-radius:50%}
+.sheet{border-radius:28px 28px 0 0}
+.bcard{border-radius:24px;border:2px solid var(--line)}
+.bcard h2{font-weight:800}
+#b_amt{font-size:34px;font-weight:800;border-radius:20px;height:68px}
+.brc b{font-size:44px;font-weight:800}
+.bk{border-radius:18px;border:0}
+.bk b{font-weight:800}
+.bmsg{border-radius:18px;font-weight:600}
+.balert{background:var(--pink);border-radius:20px}
+#b_inc{background:var(--on);color:#04261c;border:0;font-weight:800}
+#bud select{border-radius:999px;height:52px;font-weight:700;border:2px solid var(--line)}
+.bacc>summary{border-radius:20px;border:2px solid var(--line);font-weight:800}
+.lg{background:#6d4aff}
 </style>
 </head>
 <body>
@@ -275,18 +329,18 @@ html{background:var(--bg)}
 <div class="bring"><svg viewBox="0 0 140 140"><defs><linearGradient id="b_gr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6d7dff"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs><circle class="btr" cx="70" cy="70" r="60"/><circle class="bpg" id="b_ring" cx="70" cy="70" r="60" stroke="url(#b_gr)"/></svg>
 <div class="brc"><span>مسموح تصرف النهارده</span><b id="b_allow">0</b><small id="b_allowNote"></small></div></div>
 <div class="bline">الرصيد <b id="b_bal">0</b> · الحد اليومي <b id="b_lim">0</b> · باقي <b id="b_days">0</b> يوم</div><div class="bmsg" id="b_advice"></div></section>
-<section class="bcard bt-a" id="b_formc"><h2>سجّل مصروف</h2>
+<section class="bcard bt-a" id="b_formc"><h2>💸 سجّل مصروف</h2>
 <input id="b_amt" type="number" inputmode="decimal" placeholder="المبلغ"><div class="bchips" id="b_q5"></div>
 <select id="b_cats" style="margin-top:12px"></select>
-<button class="bbtn" id="b_add">إضافة المصروف</button>
+<button class="bbtn" id="b_add">💸 إضافة المصروف</button>
 <button class="bbtn g" id="b_cancel" hidden>إلغاء التعديل</button>
-<button class="bbtn g" id="b_inc">+ إضافة دخل (مرتب / عمولة / سلفة)</button>
+<button class="bbtn g" id="b_inc">💰 إضافة دخل (مرتب / عمولة / سلفة)</button>
 <details id="b_more"><summary>تفاصيل: المكان، التاريخ، الدكتور، ملاحظة</summary>
 <div class="brow"><div><label>المكان</label><select id="b_area"></select></div><div><label>التاريخ</label><input id="b_dt" type="date"></div></div>
 <label>اسم الدكتور / المنشأة (اختياري)</label><input id="b_who" list="b_whol" placeholder="مثال: د. أحمد - مستشفى الميري"><datalist id="b_whol"></datalist>
 <label>ملاحظة (اختياري)</label><input id="b_note" placeholder="مثال: ميكروباص من الحضرة لسموحة">
 </details></section>
-<details class="bacc"><summary>الأرقام والسجل</summary>
+<details class="bacc"><summary>📊 الأرقام والسجل</summary>
 <section class="bcard bt-b"><div class="bkg" style="grid-template-columns:repeat(3,1fr)"><div class="bk"><span>اتصرف النهارده</span><b id="b_spent">0</b></div><div class="bk"><span>هيتبقى (الخطة)</span><b id="b_plan">0</b></div><div class="bk"><span>هيتبقى (معدلك)</span><b id="b_proj">0</b></div></div></section>
 <section class="bcard bt-b"><h2>ميزانية الأنواع النهارده</h2><div id="b_catBud"></div></section>
 <section class="bcard bt-b"><h2>صرفك يوم بيوم (الشهر ده)</h2><div class="bcol" id="b_chart"></div><div class="bbd" id="b_stats" style="margin-top:8px"></div></section>
@@ -297,7 +351,7 @@ html{background:var(--bg)}
 <b class="bbd">حسب المنطقة (عدد العمليات ومتوسط التكلفة)</b><div id="b_byArea"></div></section>
 <section class="bcard bt-b"><h2>سجل العمليات</h2><input id="b_q" placeholder="ابحث: نوع / مكان / دكتور / ملاحظة" style="margin-bottom:6px"><div id="b_log"></div></section>
 </details>
-<details class="bacc"><summary>الإعدادات</summary>
+<details class="bacc"><summary>⚙️ الإعدادات</summary>
 <section class="bcard bt-c"><h2>إعدادات الميزانية</h2>
 <label>الرصيد الحالي (جنيه) - عدّله في أي وقت</label><input id="b_s_bal" type="number" inputmode="decimal">
 <label>المبلغ اللي لازم يتبقى معاك آخر الفترة (الادخار)</label><input id="b_s_target" type="number" inputmode="decimal">
@@ -316,7 +370,7 @@ html{background:var(--bg)}
 </div>
 
 <button class="fab" id="fab" aria-label="إضافة دكتور"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
-<nav class="nav" id="nav"><button class="nv sel" data-md="doc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg><span>الدكاترة</span></button><button class="nv" data-md="bud"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h15a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V7z"/><path d="M3 7l12-3v3M16 14h2"/></svg><span>الميزانية</span></button></nav>
+<nav class="nav" id="nav"><button class="nv sel" data-md="doc"><span class="ni">🩺</span><span>الدكاترة</span></button><button class="nv" data-md="bud"><span class="ni">💸</span><span>الميزانية</span></button></nav>
 <div class="ov" id="txv" hidden><div class="sheet"><h2>إضافة دكاترة من نص</h2><label>الصق النص هنا (دكتور بعد دكتور، وبينهم سطر فاضي)</label><textarea id="txin" dir="auto" placeholder="الاسم: د. أحمد علي&#10;التخصص: باطنة&#10;المكان: عيادة النور&#10;المنطقة: سموحة&#10;تليفون: 01012345678&#10;الأيام: سبت 10:00-14:00، ثلاثاء 16:00-20:00"></textarea><button class="b" id="txGo" style="width:100%;margin-top:10px">تحليل النص</button><div id="txout"></div><button class="save" id="txOk" hidden>إضافة المحدد</button><button class="b" id="cl4" style="width:100%;margin-top:8px">إغلاق</button></div></div>
 <div class="ov" id="metv" hidden><div class="sheet"><h2>اتقابلوا النهارده</h2><div id="metbox"></div><button class="b" id="cl3" style="width:100%;margin-top:16px">إغلاق</button></div></div>
 <div class="ov" id="sheet" hidden><div class="sheet">
@@ -558,13 +612,13 @@ function render(){
   $("today").textContent=DN[now.getDay()]+" "+now.getDate()+"/"+(now.getMonth()+1);
   $("sT").textContent=S.docs.length;$("sM").textContent=mt.length;
   $("sN").textContent=S.docs.filter(function(d){return st(d,now).k=="on"}).length;
-    var FL=[["today","جاي النهارده"],["all","كل الدكاترة"],["on","موجودين دلوقتي"],["pend","لسه مقابلتهمش"],["late","متأخرين عن الزيارة"],["star","المهمين"],["near","الأقرب ليا"],["met","اتقابلوا النهارده"]];
+    var FL=[["today","🗓️ جاي النهارده"],["all","👥 كل الدكاترة"],["on","🟢 موجودين دلوقتي"],["pend","⏳ لسه مقابلتهمش"],["late","⚠️ متأخرين عن الزيارة"],["star","⭐ المهمين"],["near","📍 الأقرب ليا"],["met","✅ اتقابلوا النهارده"]];
     var ac,fh=FL.map(function(f){return '<option value="'+f[0]+'">'+f[1]+'</option>'}).join(""),ac={};S.docs.forEach(function(d){var k=d.area||"";ac[k]=(ac[k]||0)+1});
   var ah='<option value="all">كل المناطق ('+S.docs.length+')</option>'+S.areas.map(function(a){return '<option value="'+esc(a)+'">'+esc(a)+' ('+(ac[a]||0)+')</option>'}).join("")+(ac[""]?'<option value="none">بدون منطقة ('+ac[""]+')</option>':""),sf=$("selF"),sa=$("selA");
   if(sf._h!==fh){sf.innerHTML=fh;sf._h=fh}if(sa._h!==ah){sa.innerHTML=ah;sa._h=ah}sf.value=S.f;sa.value=S.sel;
   var inA=function(d){return S.sel=="all"||(S.sel=="none"?!d.area:d.area==S.sel)},wd=now.getDay(),isToday=function(d){return !!sc(d)[wd]&&st(d,now).k!="away"},inArea=S.docs.filter(inA);
   var cOn=inArea.filter(function(d){return st(d,now).k=="on"}).length,cMet=inArea.filter(function(d){return metToday(d.metAt,now)}).length,cT=inArea.filter(isToday).length,cell=function(k,t,n){return '<div class="cc'+(S.f==k?" sel":"")+'" data-fl="'+k+'"><b>'+n+'</b><span>'+t+'</span></div>'};
-  $("cnt").innerHTML='<div class="ct">'+esc(S.sel=="all"?"كل المناطق":(S.sel=="none"?"بدون منطقة":S.sel))+' · <b>'+inArea.length+'</b> دكتور</div><div class="cc3">'+cell("today","جايين النهارده",cT)+cell("on","موجودين دلوقتي",cOn)+cell("met","اتقابلوا",cMet)+'</div>';
+  $("cnt").innerHTML='<div class="ct">'+esc(S.sel=="all"?"كل المناطق":(S.sel=="none"?"بدون منطقة":S.sel))+' · <b>'+inArea.length+'</b> دكتور</div><div class="cc3">'+cell("today","🗓️ جايين النهارده",cT)+cell("on","🟢 موجودين دلوقتي",cOn)+cell("met","✅ اتقابلوا",cMet)+'</div>';
   var mb=$("metbox");
   if(mt.length){mb.hidden=false;mb.innerHTML=mt.map(function(d){return '<div class="mrow"><div><b>'+esc(d.name)+'</b><small>'+esc(d.place||d.area||d.spec||"")+' - '+t12(d.metAt)+'</small></div><button class="b" data-m="'+esc(d.id)+'">تراجع</button></div>'}).join("")}else{mb.hidden=false;mb.innerHTML='<div class="empty">لسه محدش اتقابل النهارده</div>'}
   remind(now);autoBak();navS(now);syncUI();
@@ -578,7 +632,7 @@ function render(){
   $("list").innerHTML=list.map(function(o,ix){
     var d=o.d,s=o.s,id=esc(d.id),met=metToday(d.metAt,now),op=openId===d.id,x="",lt=lv(d),ag=lt?dAgo(lt,now):-1,agT=ag<0?"لسه مقابلتوش":(ag==0?"":(ag==1?"آخر زيارة امبارح":"آخر زيارة من "+ag+" يوم"));
     if(op){var vis=visH(d,now,met),call=callH(d),aw=d.away&&now.getTime()<d.away;x=(d.desc?'<div class="pl">'+esc(d.desc)+'</div>':"")+(d.note?'<div class="pl">'+esc(d.note)+'</div>':"")+'<div class="dl">'+ORDER.filter(function(i){return sc(d)[i]}).map(function(i){var c=sc(d)[i];return '<div class="dr'+(i==now.getDay()?" td":"")+'"><span>'+DN[i]+'</span><span>'+perT(c)+'</span></div>'}).join("")+'</div>'+vis+'<div class="acts"><a class="ai" target="_blank" rel="noopener" aria-label="الموقع" href="'+esc(mapLink(d))+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></a>'+call+'<button class="ai" data-e="'+id+'" aria-label="تعديل"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg></button></div>'}
-    return '<div class="cd '+s.k+(met?" met":"")+(animNext?" an":"")+(popId===d.id?" pop":"")+(op?" open":"")+'" style="--i:'+Math.min(ix,9)+'"><button class="ck" data-m="'+id+'" aria-label="اتقابل">'+(met?CKI:"")+'</button><div class="bd" data-o="'+id+'"><div class="nm">'+esc(d.name)+(d.star?'<span class="star">★</span>':"")+'</div><div class="pl">'+(d.spec?esc(d.spec)+" · ":"")+esc(d.place||"")+(d.place&&d.area?" - ":"")+esc(d.area||"")+nearT(d)+'</div>'+dayP(d,now)+'<div class="stt"><i></i>'+esc(s.t)+(met?" - اتقابل "+t12(d.metAt):"")+'</div>'+(agT?'<div class="ago'+(ag<0||ag>=14?" l":"")+'">'+agT+'</div>':"")+x+'</div></div>'
+    return '<div class="cd '+s.k+(met?" met":"")+(animNext?" an":"")+(popId===d.id?" pop":"")+(op?" open":"")+'" style="--i:'+Math.min(ix,9)+'"><button class="ck" data-m="'+id+'" aria-label="اتقابل">'+(met?CKI:"")+'</button><div class="bd" data-o="'+id+'"><div class="nm">'+esc(d.name)+(d.star?'<span class="star">★</span>':"")+'</div><div class="pl">'+(d.spec?'<b class="sp2" style="'+spS(d.spec)+'">'+esc(d.spec)+'</b> · ':"")+esc(d.place||"")+(d.place&&d.area?" - ":"")+esc(d.area||"")+nearT(d)+'</div>'+dayP(d,now)+'<div class="stt"><i></i>'+esc(s.t)+(met?" - اتقابل "+t12(d.metAt):"")+'</div>'+(agT?'<div class="ago'+(ag<0||ag>=14?" l":"")+'">'+agT+'</div>':"")+x+'</div></div>'
   }).join("");
   animNext=false;popId=null;
 }
@@ -702,7 +756,7 @@ function render(){
  anim($b("days"),wd);anim($b("bal"),bal);anim($b("lim"),lim);anim($b("spent"),sp);anim($b("allow"),allow);anim($b("plan"),plan);anim($b("proj"),proj);
  $b("allow").className=allow<0?"er":allow<lim*.25?"wr":"ok";
  $b("allowNote").textContent=allow<0?"عديت الحد بـ "+fmt(-allow):"من حد "+fmt(lim);
- const ring=$b("ring");ring.style.strokeDashoffset=377*(1-Math.min(1,lim>0?sp/lim:(sp>0?1:0)));ring.style.stroke=allow<0?"var(--off)":"var(--pri)";
+ const ring=$b("ring");ring.style.strokeDashoffset=377*(1-Math.min(1,lim>0?sp/lim:(sp>0?1:0)));ring.style.stroke=allow<0?"var(--off)":(allow<lim*.25?"var(--amb)":"var(--on)");
  $b("proj").className=proj<B.target?"er":"";
  let ad;
  if(wd===0)ad="🏁 الفترة خلصت. الرصيد النهائي "+fmt(bal)+" جنيه.";
@@ -739,7 +793,7 @@ function extra(td,mo,lim){
  const dn=((window.S&&window.S.docs)||[]).map(d=>d.name);
  $b("whol").innerHTML=[...new Set(B.exp.map(x=>x.who).filter(Boolean).concat(dn))].map(w=>`<option value="${esc(w)}">`).join("");
 }
-function resetForm(){editId=null;editT=null;$b("amt").value="";$b("note").value="";$b("who").value="";$b("add").textContent="إضافة المصروف";$b("cancel").hidden=true;$b("dt").value=ymd(new Date())}
+function resetForm(){editId=null;editT=null;$b("amt").value="";$b("note").value="";$b("who").value="";$b("add").textContent="💸 إضافة المصروف";$b("cancel").hidden=true;$b("dt").value=ymd(new Date())}
 function fill(){$b("s_bal").value=Math.round(B.start+sum(B.inc)-sum(B.exp));$b("s_target").value=B.target;$b("s_end").value=B.end;$b("s_safe").value=B.safe;$b("s_fixed").value=B.fixed||"";$b("cb").innerHTML=CATS.map(c=>`<div><label>${c[1]} ${esc(c[0])}</label><input data-cb="${esc(c[0])}" type="number" inputmode="decimal" value="${(B.cb||{})[c[0]]||""}"></div>`).join("")}
 function rebuild(){
  const ex=((window.S&&window.S.areas)||[]).filter(a=>!AREAS.some(x=>x[0]===a)).map(a=>[a,"📍"]),AX=AREAS.concat(ex);

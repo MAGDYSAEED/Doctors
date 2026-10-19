@@ -1,6 +1,6 @@
 /* مواعيد الدكاترة - service worker: يخلي التطبيق يفتح أوفلاين */
-var V = "docs-v6";
-var SHELL = ["index.html", "manifest.json", "icon-192.png"];
+var V = "docs-v8";
+var SHELL = ["index.html", "manifest.json", "icon-192.png", "icon-512.png"];
 
 self.addEventListener("install", function (e) {
   e.waitUntil(
