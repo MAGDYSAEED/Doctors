@@ -1,15 +1,20 @@
 {
-  "name": "مواعيد الدكاترة",
+  "id": "./",
+  "name": "مواعيد الدكاترة والميزانية",
   "short_name": "الدكاترة",
+  "description": "متابعة مواعيد الدكاترة والزيارات والميزانية اليومية، وبيشتغل أوفلاين",
   "lang": "ar",
   "dir": "rtl",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0f4c5c",
-  "theme_color": "#0f4c5c",
+  "orientation": "portrait",
+  "background_color": "#06080f",
+  "theme_color": "#0f1b2d",
+  "categories": ["medical", "productivity"],
   "icons": [
-    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
-    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }
