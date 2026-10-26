@@ -3,10 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#6d4aff">
+<meta name="theme-color" content="#182d4f">
+<meta name="description" content="مساعد المندوب الطبي لإدارة الدكاترة والزيارات والمبيعات والتارجت والميزانية.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<title>مواعيد الدكاترة</title>
+<title>MedRep Pro | إدارة المندوب الطبي</title>
 <script>try{var _t=localStorage.getItem("theme");if(_t)document.documentElement.setAttribute("data-theme",_t)}catch(e){}</script>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
@@ -312,6 +313,59 @@ html{background:var(--bg)}
 #bud select{border-radius:999px;height:52px;font-weight:700;border:2px solid var(--line)}
 .bacc>summary{border-radius:20px;border:2px solid var(--line);font-weight:800}
 .lg{background:#6d4aff}
+
+/* MedRep Pro — sales workspace and polished business UI */
+:root{--pri:#2457a7;--pink:#0f9f9a}
+.top{background:linear-gradient(135deg,#10243f 0%,#1d4778 58%,#287e91 120%);border-radius:22px;box-shadow:0 18px 38px -24px #10243f}
+.chip.sel,.b.p{background:var(--pri);border-color:var(--pri)}
+.nv.sel{background:var(--pri);color:#fff}
+body.md-bud #docv,body.md-bud #salesv{display:none}
+body:not(.md-bud):not(.md-sales) #bud,body:not(.md-sales) #salesv{display:none}
+body.md-sales #docv,body.md-sales #bud{display:none}
+body.md-sales .top .sum,body.md-sales .top .qt{display:none}
+body.md-sales .fab{display:none}
+#salesv{padding-bottom:16px}
+.sales-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin:16px 0 12px}
+.sales-head h1{font-size:25px;line-height:1.2;margin:0 0 5px;font-weight:850;letter-spacing:-.5px}
+.sales-head p{margin:0;color:var(--mut);font-size:13px}
+.sbadge{font-size:11px;font-weight:800;color:#087f78;background:color-mix(in srgb,#0f9f9a 13%,var(--card));padding:7px 10px;border-radius:999px;white-space:nowrap}
+.smetrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}
+.smetric,.scard{background:var(--card);border:1px solid var(--line);border-radius:19px;padding:15px;box-shadow:var(--sh);min-width:0}
+.smetric .label{font-size:12px;color:var(--mut);font-weight:650}
+.smetric strong{display:block;font-size:25px;line-height:1.3;margin:5px 0 2px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.smetric small{font-size:11px;color:var(--mut)}
+.smetric .sicon{float:left;font-size:20px;background:var(--card2);border-radius:12px;padding:7px}
+.scard{margin:12px 0}
+.scard h2{font-size:16px;margin:0 0 13px;font-weight:850}
+.sprogress{height:9px;background:var(--card2);border-radius:99px;overflow:hidden;margin:12px 0 8px}
+.sprogress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#2457a7,#0f9f9a);border-radius:99px;transition:width .25s}
+.sbetween{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--mut)}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#salesv label{display:block;font-size:12px;font-weight:750;color:var(--mut);margin:10px 0 5px}
+#salesv input,#salesv select,#salesv textarea{width:100%;min-width:0;height:46px;border:1px solid var(--line);border-radius:12px;padding:0 12px;background:var(--card2);color:var(--ink);font:inherit;font-size:14px}
+#salesv textarea{height:76px;padding:10px;resize:vertical}
+.sprimary,.ssecondary,.sdanger{border:0;border-radius:13px;padding:12px 14px;font:inherit;font-weight:800;cursor:pointer}
+.sprimary{background:var(--pri);color:#fff;width:100%;margin-top:13px}
+.ssecondary{background:var(--card2);color:var(--ink);border:1px solid var(--line)}
+.sdanger{background:color-mix(in srgb,var(--off) 12%,var(--card));color:var(--off);padding:7px 10px;font-size:12px}
+.sactions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.sactions button{flex:1}
+.sactivity{padding:13px 0;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+.sactivity:last-child{border-bottom:0;padding-bottom:0}
+.sactivity .smark{width:39px;height:39px;flex:0 0 39px;display:grid;place-items:center;border-radius:13px;background:var(--card2);font-size:18px}
+.sactivity .sbody{flex:1;min-width:0}
+.sactivity b{font-size:14px;display:block;overflow-wrap:anywhere}
+.sactivity small{display:block;color:var(--mut);font-size:11px;margin-top:3px;overflow-wrap:anywhere}
+.sactivity .samt{font-size:13px;font-weight:850;white-space:nowrap;direction:ltr}
+.sstatus{display:inline-block;border-radius:999px;padding:3px 7px;font-size:10px;font-weight:800;margin-top:5px;background:var(--card2);color:var(--mut)}
+.sstatus.done{color:#087f78;background:color-mix(in srgb,#0f9f9a 12%,var(--card))}
+.sstatus.pending{color:#a66a00;background:color-mix(in srgb,#e5a000 14%,var(--card))}
+.sempty{padding:22px 10px;text-align:center;color:var(--mut);font-size:13px}
+.snote{font-size:11px;color:var(--mut);line-height:1.7;margin-top:9px}
+#salesv .stoggle{display:flex;gap:7px;align-items:center;font-size:12px;color:var(--mut);margin-top:9px}
+#salesv .stoggle input{width:17px;height:17px}
+@media(min-width:560px){body{max-width:760px}.smetrics{grid-template-columns:repeat(4,minmax(0,1fr))}.smetric strong{font-size:23px}}
+
 </style>
 </head>
 <body>
@@ -369,8 +423,40 @@ html{background:var(--bg)}
 <div class="btoast" id="b_toast"></div>
 </div>
 
+<main id="salesv" aria-label="إدارة المبيعات الطبية">
+  <div class="sales-head"><div><h1>مساحة المبيعات</h1><p>زياراتك، فرص البيع، المتابعات والتارجت في مكان واحد.</p></div><span class="sbadge">MEDREP PRO</span></div>
+  <section class="scard" aria-labelledby="stitle"><h2 id="stitle">🎯 التارجت الشهري</h2>
+    <div class="sbetween"><span>تحقيق المبيعات</span><b id="s_target_pct">0%</b></div><div class="sprogress"><i id="s_target_bar"></i></div>
+    <div class="sbetween"><span>المبيعات: <b id="s_target_sales">0 ج.م</b></span><span>المتبقي: <b id="s_target_left">0 ج.م</b></span></div>
+    <div class="sgrid"><div><label for="s_target_input">التارجت الشهري (جنيه)</label><input id="s_target_input" type="number" min="0" step="any" inputmode="decimal" placeholder="مثال: 150000"></div><div><label for="s_commission">العمولة المتوقعة (%)</label><input id="s_commission" type="number" min="0" max="100" step="0.1" inputmode="decimal" placeholder="مثال: 2"></div></div>
+    <button class="sprimary" id="s_save_settings">حفظ إعدادات التارجت</button>
+  </section>
+  <div class="smetrics">
+    <div class="smetric"><span class="sicon">💰</span><span class="label">مبيعات الشهر</span><strong id="s_m_sales">0</strong><small>جنيه مصري</small></div>
+    <div class="smetric"><span class="sicon">🩺</span><span class="label">زيارات الشهر</span><strong id="s_m_visits">0</strong><small>زيارة مسجلة</small></div>
+    <div class="smetric"><span class="sicon">🔔</span><span class="label">متابعات مستحقة</span><strong id="s_m_due">0</strong><small>اليوم أو متأخرة</small></div>
+    <div class="smetric"><span class="sicon">📈</span><span class="label">عمولة تقديرية</span><strong id="s_m_comm">0</strong><small>حسب النسبة المحددة</small></div>
+  </div>
+  <section class="scard"><h2>➕ تسجيل نشاط جديد</h2>
+    <form id="s_form">
+      <div class="sgrid"><div><label for="s_type">نوع النشاط</label><select id="s_type"><option value="زيارة">زيارة</option><option value="متابعة">متابعة</option><option value="عرض سعر">عرض سعر</option><option value="صفقة">صفقة / بيع</option></select></div><div><label for="s_date">التاريخ</label><input id="s_date" type="date" required></div></div>
+      <div class="sgrid"><div><label for="s_client">الدكتور / العميل *</label><input id="s_client" required maxlength="120" placeholder="اسم الدكتور أو المستشفى"></div><div><label for="s_product">الجهاز / المنتج</label><input id="s_product" maxlength="120" placeholder="مثال: Patient Monitor"></div></div>
+      <div class="sgrid"><div><label for="s_amount">قيمة الفرصة أو البيع (جنيه)</label><input id="s_amount" type="number" min="0" step="any" inputmode="decimal" placeholder="0"></div><div><label for="s_status">الحالة</label><select id="s_status"><option value="جديد">جديد</option><option value="متابعة مطلوبة">متابعة مطلوبة</option><option value="عرض سعر مرسل">عرض سعر مرسل</option><option value="تم البيع">تم البيع</option><option value="لم يتم">لم يتم</option></select></div></div>
+      <div class="sgrid"><div><label for="s_follow">موعد المتابعة القادم</label><input id="s_follow" type="date"></div><div><label for="s_phone">رقم التواصل (اختياري)</label><input id="s_phone" type="tel" inputmode="tel" maxlength="30" placeholder="رقم العميل"></div></div>
+      <label for="s_notes">ملاحظات واحتياج العميل</label><textarea id="s_notes" maxlength="1000" placeholder="احتياج العميل، الاعتراضات، الخطوة التالية..."></textarea>
+      <button class="sprimary" type="submit">حفظ النشاط</button>
+      <div class="snote">استخدم بيانات العملاء التي لديك صلاحية للاحتفاظ بها فقط. البيانات في هذا القسم محفوظة محليًا على الجهاز، وتزامنها السحابي يعتمد على إعداد Firebase الحالي.</div>
+    </form>
+  </section>
+  <section class="scard"><h2>📌 سجل الأنشطة والمتابعات</h2>
+    <div class="sgrid"><div><label for="s_filter_type">نوع النشاط</label><select id="s_filter_type"><option value="all">كل الأنشطة</option><option>زيارة</option><option>متابعة</option><option>عرض سعر</option><option>صفقة</option></select></div><div><label for="s_filter_status">الحالة</label><select id="s_filter_status"><option value="all">كل الحالات</option><option>جديد</option><option>متابعة مطلوبة</option><option>عرض سعر مرسل</option><option>تم البيع</option><option>لم يتم</option></select></div></div>
+    <div class="sactions"><button type="button" class="ssecondary" id="s_export_csv">تصدير الأنشطة CSV</button><button type="button" class="ssecondary" id="s_export_json">نسخة احتياطية</button></div>
+    <div id="s_activity_list"><div class="sempty">لسه مفيش أنشطة مسجلة. ابدأ بأول زيارة.</div></div>
+  </section>
+</main>
+
 <button class="fab" id="fab" aria-label="إضافة دكتور"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
-<nav class="nav" id="nav"><button class="nv sel" data-md="doc"><span class="ni">🩺</span><span>الدكاترة</span></button><button class="nv" data-md="bud"><span class="ni">💸</span><span>الميزانية</span></button></nav>
+<nav class="nav" id="nav"><button class="nv sel" data-md="doc"><span class="ni">🩺</span><span>الدكاترة</span></button><button class="nv" data-md="sales"><span class="ni">📈</span><span>المبيعات</span></button><button class="nv" data-md="bud"><span class="ni">💸</span><span>الميزانية</span></button></nav>
 <div class="ov" id="txv" hidden><div class="sheet"><h2>إضافة دكاترة من نص</h2><label>الصق النص هنا (دكتور بعد دكتور، وبينهم سطر فاضي)</label><textarea id="txin" dir="auto" placeholder="الاسم: د. أحمد علي&#10;التخصص: باطنة&#10;المكان: عيادة النور&#10;المنطقة: سموحة&#10;تليفون: 01012345678&#10;الأيام: سبت 10:00-14:00، ثلاثاء 16:00-20:00"></textarea><button class="b" id="txGo" style="width:100%;margin-top:10px">تحليل النص</button><div id="txout"></div><button class="save" id="txOk" hidden>إضافة المحدد</button><button class="b" id="cl4" style="width:100%;margin-top:8px">إغلاق</button></div></div>
 <div class="ov" id="metv" hidden><div class="sheet"><h2>اتقابلوا النهارده</h2><div id="metbox"></div><button class="b" id="cl3" style="width:100%;margin-top:16px">إغلاق</button></div></div>
 <div class="ov" id="sheet" hidden><div class="sheet">
@@ -401,7 +487,7 @@ html{background:var(--bg)}
   </details>
   <button class="b" id="cl2" style="width:100%;margin-top:16px">إغلاق</button>
 </div></div>
-<div id="login"><div class="lg"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg></div><h2>مواعيد الدكاترة</h2><p id="lmsg">جاري التحميل...</p><button id="gbtn" hidden>الدخول بحساب جوجل</button></div>
+<div id="login"><div class="lg"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg></div><h2>MedRep Pro</h2><p id="lmsg">جاري التحميل...</p><button id="gbtn" hidden>الدخول بحساب جوجل</button></div>
 <script>
 var DN=["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"],ORDER=[6,0,1,2,3,4,5],SH=["أحد","اثنين","ثلاثاء","أربعاء","خميس","جمعة","سبت"];
 var SPEC=["باطنة","قلب","عظام","أطفال","نساء وتوليد","جلدية","عيون","أنف وأذن","أسنان","مخ وأعصاب"];
@@ -452,6 +538,7 @@ function doPush(){
   if(!ref||!cloudReady)return;
   var o={areas:S.areas,docs:S.docs,specs:S.specs||[]};
   if(window.BUD&&BUD.hasLocal())o.budget=JSON.stringify(BUD.get());
+  try{var salesCloud=localStorage.getItem("sales-v1");if(salesCloud!==null)o.sales=salesCloud}catch(e){}
   var v=pv;
   ref.set(o).then(function(){if(v===pv){setDirty(false);syncUI()}}).catch(function(){$("note").hidden=false;$("note").textContent="تعذر الحفظ على السيرفر. جرّب تاني."})
 }
@@ -485,9 +572,9 @@ function remind(now){var on=ready?S.docs.filter(function(d){return st(d,now).k==
   var fresh=on.filter(function(d){return sent.ids.indexOf(d.id)<0});if(!fresh.length)return;
   try{new Notification("وصلوا دلوقتي",{body:fresh.slice(0,3).map(function(d){return d.name}).join("، ")+(fresh.length>3?" و"+(fresh.length-3)+" كمان":"")})}catch(e){}
   fresh.forEach(function(d){sent.ids.push(d.id)});try{localStorage.setItem("rem-sent",JSON.stringify(sent))}catch(e){}}
-function autoBak(){if(!shown||!S.docs.length)return;var t=0;try{t=+localStorage.getItem("bak-t")||0}catch(e){}
+function autoBak(){if(!shown||(!S.docs.length&&!localStorage.getItem("sales-v1")))return;var t=0;try{t=+localStorage.getItem("bak-t")||0}catch(e){}
   if(Date.now()-t<6048e5)return;
-  try{var o={t:Date.now(),areas:S.areas,docs:S.docs,specs:S.specs||[],budget:window.BUD?BUD.get():null};localStorage.setItem("bak-1",JSON.stringify(o));localStorage.setItem("bak-t",String(o.t))}catch(e){}}
+  try{var o={t:Date.now(),areas:S.areas,docs:S.docs,specs:S.specs||[],budget:window.BUD?BUD.get():null,sales:JSON.parse(localStorage.getItem("sales-v1")||"null")};localStorage.setItem("bak-1",JSON.stringify(o));localStorage.setItem("bak-t",String(o.t))}catch(e){}}
 /*TX-START*/
 function nz(s){s=String(s||"").replace(/[\u064B-\u065F\u0640]/g,"").replace(/[أإآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").trim().toLowerCase();return s.length>3&&s.indexOf("ال")==0?s.slice(2):s}
 var KM=[["name",["اسم","دكتور"]],["spec",["تخصص"]],["place",["مكان","عياده","مستشفي","عنوان"]],["area",["منطقه","حي"]],["phone",["تليفون","موبايل","رقم","هاتف","واتس"]],["days",["ايام","مواعيد","ميعاد","يوم"]],["note",["ملاحظ"]],["star",["مهم"]],["desc",["وصف"]],["map",["لينك","ماب","خريطه","رابط"]]];
@@ -688,7 +775,7 @@ document.addEventListener("click",function(e){
   else if(i=="stB"){fStar=!fStar;T.classList.toggle("sel",fStar)}
   else if(i=="locB"){if(!navigator.geolocation)return;T.textContent="جاري تحديد الموقع...";navigator.geolocation.getCurrentPosition(function(p){fLoc={lat:p.coords.latitude,lng:p.coords.longitude};T.textContent="الموقع متسجل (اضغط للتحديث)"},function(){T.textContent="تعذر تحديد الموقع، جرّب تاني"},{enableHighAccuracy:true,timeout:10000})}
   else if(i=="ntf"){if(!("Notification" in window)){nt("المتصفح ده مش بيدعم الإشعارات");return}Notification.requestPermission().then(function(){bkS();render()})}
-  else if(i=="rst"){var bo=null;try{bo=JSON.parse(localStorage.getItem("bak-1"))}catch(er){}if(!bo){nt("مفيش نسخة تلقائية لسه");$("set").hidden=true;return}if(!confirm("هترجع بيانات "+new Date(bo.t).toLocaleDateString("ar-EG")+" ("+bo.docs.length+" دكتور) وهتحل محل الحالية. متأكد؟"))return;try{localStorage.setItem("bak-pre",JSON.stringify({t:Date.now(),areas:S.areas,docs:S.docs,specs:S.specs||[],budget:BUD.get()}))}catch(er){}S.areas=bo.areas;S.docs=bo.docs;S.specs=bo.specs||[];if(bo.budget)BUD.set(bo.budget);persist();$("set").hidden=true;render()}
+  else if(i=="rst"){var bo=null;try{bo=JSON.parse(localStorage.getItem("bak-1"))}catch(er){}if(!bo){nt("مفيش نسخة تلقائية لسه");$("set").hidden=true;return}if(!confirm("هترجع بيانات "+new Date(bo.t).toLocaleDateString("ar-EG")+" ("+bo.docs.length+" دكتور) وهتحل محل الحالية. متأكد؟"))return;try{localStorage.setItem("bak-pre",JSON.stringify({t:Date.now(),areas:S.areas,docs:S.docs,specs:S.specs||[],budget:BUD.get(),sales:JSON.parse(localStorage.getItem("sales-v1")||"null")}))}catch(er){}S.areas=bo.areas;S.docs=bo.docs;S.specs=bo.specs||[];if(bo.budget)BUD.set(bo.budget);if(bo.sales)try{localStorage.setItem("sales-v1",JSON.stringify(bo.sales))}catch(er){}if(window.salesRender)window.salesRender();persist();$("set").hidden=true;render()}
   else if(i=="fab"){if(MODE=="bud")BUD.focusForm();else openForm()}
   else if(i=="menu"){showOff();wkS();bkS();$("set").hidden=false}
   else if(i=="oM"||i=="oP"){OFF+=i=="oP"?1:-1;try{localStorage.setItem("clk-off",OFF)}catch(e){}showOff();tick();render()}
@@ -718,12 +805,12 @@ $("save").onclick=function(){
   var sp=rec.spec;if(sp){S.specs=S.specs||[];if(S.specs.indexOf(sp)<0&&SPEC.indexOf(sp)<0)S.specs.push(sp)}
   editId=null;$("sheet").hidden=true;persist();render();
 };
-$("exp").onclick=function(){var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify({areas:S.areas,docs:S.docs,specs:S.specs||[],budget:BUD.get()})],{type:"application/json"}));a.download="doctors-backup.json";a.click()};
-$("imp").onchange=function(){var f=this.files[0];if(!f)return;var r=new FileReader();r.onload=function(){try{var o=JSON.parse(r.result);if(!Array.isArray(o.areas)||!Array.isArray(o.docs))throw 0;S.areas=o.areas;S.docs=o.docs;S.specs=o.specs||S.specs||[];if(o.budget)BUD.set(o.budget);persist();$("set").hidden=true;render()}catch(e){$("note").hidden=false;$("note").textContent="الملف مش صالح"}};r.readAsText(f)};
+$("exp").onclick=function(){var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify({areas:S.areas,docs:S.docs,specs:S.specs||[],budget:BUD.get(),sales:JSON.parse(localStorage.getItem("sales-v1")||"null")})],{type:"application/json"}));a.download="medrep-pro-backup.json";a.click()};
+$("imp").onchange=function(){var f=this.files[0];if(!f)return;var r=new FileReader();r.onload=function(){try{var o=JSON.parse(r.result);if(!Array.isArray(o.areas)||!Array.isArray(o.docs))throw 0;S.areas=o.areas;S.docs=o.docs;S.specs=o.specs||S.specs||[];if(o.budget)BUD.set(o.budget);if(o.sales)try{localStorage.setItem("sales-v1",JSON.stringify(o.sales))}catch(e){}persist();if(window.salesRender)window.salesRender();$("set").hidden=true;render()}catch(e){$("note").hidden=false;$("note").textContent="الملف مش صالح"}};r.readAsText(f)};
 document.addEventListener("visibilitychange",function(){if(!document.hidden){tick();render()}});
 /*BUD-START*/
-var MODE="doc";try{MODE=localStorage.getItem("mode")==="bud"?"bud":"doc"}catch(e){}
-function setMode(m){MODE=m;try{localStorage.setItem("mode",m)}catch(e){}document.body.classList.toggle("md-bud",m=="bud");
+var MODE="doc";try{var _savedMode=localStorage.getItem("mode");MODE=["doc","bud","sales"].indexOf(_savedMode)>=0?_savedMode:"doc"}catch(e){}
+function setMode(m){MODE=m;try{localStorage.setItem("mode",m)}catch(e){}document.body.classList.toggle("md-bud",m=="bud");document.body.classList.toggle("md-sales",m=="sales");
   Array.prototype.forEach.call(document.querySelectorAll(".nv[data-md]"),function(x){x.classList.toggle("sel",x.getAttribute("data-md")==m)});
   if(m=="bud"){BUD.rebuild();BUD.fill();BUD.render()}window.scrollTo(0,0)}
 var BUD=(function(){
@@ -846,6 +933,66 @@ setInterval(function(){if(!document.hidden&&MODE!="bud")render()},30000);tick();
 (function(){try{if(localStorage.getItem("signed")==="1")$("login").hidden=true}catch(e){}var l=localLoad();if(l){S.areas=l.areas||[];S.docs=l.docs||[];S.specs=l.specs||[]}ready=true;render()})();
 </script>
 
+<script>
+(function(){
+  "use strict";
+  const $=id=>document.getElementById(id);
+  const KEY="sales-v1";
+  const today=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+  const monthKey=()=>today().slice(0,7);
+  const money=n=>Number(n||0).toLocaleString("ar-EG",{maximumFractionDigits:2});
+  const safe=(v)=>String(v==null?"":v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const defaults=()=>({target:0,commission:0,activities:[]});
+  function load(){try{const v=JSON.parse(localStorage.getItem(KEY)||"null");if(v&&typeof v==="object"){return {target:Math.max(0,Number(v.target)||0),commission:Math.min(100,Math.max(0,Number(v.commission)||0)),activities:Array.isArray(v.activities)?v.activities.filter(x=>x&&typeof x==="object"):[]}}}catch(e){}return defaults()}
+  let data=load();
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(data));if(window.pushCloud)window.pushCloud();return true}catch(e){alert("مساحة التخزين ممتلئة أو غير متاحة. صدّر نسخة احتياطية قبل المتابعة.");return false}}
+  function isSold(x){return x.status==="تم البيع"}
+  function thisMonth(x){return String(x.date||"").slice(0,7)===monthKey()}
+  function salesTotal(){return data.activities.filter(x=>thisMonth(x)&&isSold(x)).reduce((a,x)=>a+Math.max(0,Number(x.amount)||0),0)}
+  function render(){
+    const month=data.activities.filter(thisMonth),sold=salesTotal(),target=Math.max(0,Number(data.target)||0),pct=target?Math.min(100,Math.round(sold/target*100)):0;
+    $("s_target_pct").textContent=target?pct+"%":"حدد التارجت";$("s_target_bar").style.width=pct+"%";
+    $("s_target_sales").textContent=money(sold)+" ج.م";$("s_target_left").textContent=money(Math.max(0,target-sold))+" ج.م";
+    $("s_m_sales").textContent=money(sold);$("s_m_visits").textContent=month.filter(x=>x.type==="زيارة").length;
+    $("s_m_due").textContent=data.activities.filter(x=>x.follow&&x.follow<=today()&&x.status!=="تم البيع"&&x.status!=="لم يتم").length;
+    $("s_m_comm").textContent=money(sold*data.commission/100);
+    if(document.activeElement!==$("s_target_input"))$("s_target_input").value=data.target||"";
+    if(document.activeElement!==$("s_commission"))$("s_commission").value=data.commission||"";
+    const ft=$("s_filter_type").value,fs=$("s_filter_status").value;
+    const list=data.activities.filter(x=>(ft==="all"||x.type===ft)&&(fs==="all"||x.status===fs)).slice().sort((a,b)=>(b.date||"").localeCompare(a.date||"")||(b.created||0)-(a.created||0));
+    const icons={"زيارة":"🩺","متابعة":"🔔","عرض سعر":"📄","صفقة":"💰"};
+    $("s_activity_list").innerHTML=list.length?list.map(x=>{
+      const follow=x.follow?`<small>المتابعة: ${safe(x.follow)}${x.follow<=today()&&x.status!=="تم البيع"&&x.status!=="لم يتم"?" · مستحقة":""}</small>`:"";
+      const amount=Number(x.amount)>0?`<div class="samt">${money(x.amount)} ج.م</div>`:"";
+      const phone=x.phone?`<small>☎ ${safe(x.phone)}</small>`:"";
+      return `<article class="sactivity"><div class="smark">${icons[x.type]||"📌"}</div><div class="sbody"><b>${safe(x.client||"عميل بدون اسم")}</b><small>${safe(x.type)} · ${safe(x.date||"")}${x.product?" · "+safe(x.product):""}</small>${phone}<small>${safe(x.notes||"")}</small><span class="sstatus ${x.status==="تم البيع"?"done":x.status==="متابعة مطلوبة"?"pending":""}">${safe(x.status||"جديد")}</span>${follow}</div>${amount}<button type="button" class="sdanger" data-sales-delete="${safe(x.id)}" aria-label="حذف النشاط">حذف</button></article>`
+    }).join(""):'<div class="sempty">لا توجد أنشطة مطابقة للفلاتر حاليًا.</div>';
+  }
+  window.salesRender=render;
+  window.salesReloadFromStorage=()=>{data=load();render()};
+  window.salesClearLocal=()=>{data=defaults();try{localStorage.removeItem(KEY)}catch(e){}render()};
+  function notify(msg){const t=$("b_toast");if(t){t.textContent=msg;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),2600)}else alert(msg)}
+  $("s_date").value=today();
+  $("s_save_settings").addEventListener("click",()=>{data.target=Math.max(0,Number($("s_target_input").value)||0);data.commission=Math.min(100,Math.max(0,Number($("s_commission").value)||0));if(save()){render();notify("اتحفظت إعدادات المبيعات")}});
+  $("s_form").addEventListener("submit",e=>{
+    e.preventDefault();const client=$("s_client").value.trim();if(!client){$("s_client").focus();return}
+    const amount=Math.max(0,Number($("s_amount").value)||0),type=$("s_type").value,status=$("s_status").value;
+    if(type==="صفقة"&&amount<=0&&!confirm("قيمة البيع صفر. هل تريد تسجيل الصفقة بدون قيمة؟"))return;
+    const rec={id:(window.crypto&&crypto.randomUUID)?crypto.randomUUID():String(Date.now())+Math.random().toString(16).slice(2),created:Date.now(),type,date:$("s_date").value||today(),client,product:$("s_product").value.trim(),amount,status,follow:$("s_follow").value,phone:$("s_phone").value.trim(),notes:$("s_notes").value.trim()};
+    data.activities.push(rec);if(!save())return;
+    $("s_form").reset();$("s_date").value=today();render();notify("اتسجل النشاط بنجاح");
+  });
+  $("s_filter_type").addEventListener("change",render);$("s_filter_status").addEventListener("change",render);
+  $("s_activity_list").addEventListener("click",e=>{const b=e.target.closest("[data-sales-delete]");if(!b)return;const x=data.activities.find(x=>String(x.id)===b.getAttribute("data-sales-delete"));if(!x||!confirm("متأكد إنك عايز تمسح النشاط ده؟"))return;data.activities=data.activities.filter(x=>String(x.id)!==String(b.getAttribute("data-sales-delete")));if(save())render()});
+  function download(name,content,type){const blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+  $("s_export_json").addEventListener("click",()=>download("medrep-sales-backup-"+today()+".json",JSON.stringify({version:1,exportedAt:new Date().toISOString(),sales:data},null,2),"application/json;charset=utf-8"));
+  $("s_export_csv").addEventListener("click",()=>{const rows=[["التاريخ","النوع","العميل","المنتج","القيمة","الحالة","المتابعة","الهاتف","ملاحظات"],...data.activities.map(x=>[x.date,x.type,x.client,x.product,x.amount,x.status,x.follow,x.phone,x.notes])];const csv="\ufeff"+rows.map(r=>r.map(v=>'"'+String(v==null?"":v).replace(/"/g,'""')+'"').join(",")).join("\r\n");download("medrep-activities-"+today()+".csv",csv,"text/csv;charset=utf-8")});
+  window.salesExportData=()=>JSON.parse(JSON.stringify(data));
+  window.salesImportData=v=>{if(v&&Array.isArray(v.activities)){data={target:Math.max(0,Number(v.target)||0),commission:Math.min(100,Math.max(0,Number(v.commission)||0)),activities:v.activities};save();render()}};
+  render();
+})();
+</script>
+
 <script type="module">
 const el=i=>document.getElementById(i);
 const FB="https://www.gstatic.com/firebasejs/10.14.1/";
@@ -867,6 +1014,7 @@ try{
     if(window.isDirty()&&!confirm("فيه بيانات لسه ما اتزامنتش وهتضيع لو سجلت خروج دلوقتي. متأكد؟"))return;
     await Au.signOut(auth);
     try{localStorage.removeItem("signed");localStorage.removeItem("sync-dirty");localStorage.removeItem("docs-v1")}catch(e){}
+    if(window.salesClearLocal)window.salesClearLocal();
     window.cloudReady=false;window.S.areas=[];window.S.docs=[];window.S.specs=[];window.BUD.clear();
     window.render();window.syncUI();
   };
@@ -893,11 +1041,13 @@ try{
           window.S.areas=c.areas||[];window.S.docs=c.docs||[];window.S.specs=c.specs||[];
           if(c.budget)window.BUD.setJson(c.budget);
           else if(window.BUD.hasLocal())window.pushCloud();
+          if(c.sales!==undefined){try{localStorage.setItem("sales-v1",typeof c.sales==="string"?c.sales:JSON.stringify(c.sales))}catch(e){}}else{try{localStorage.removeItem("sales-v1")}catch(e){}}
+          if(window.salesReloadFromStorage)window.salesReloadFromStorage();
         }
       }else if(first){
         const l=window.localLoad();
         if(l){window.S.areas=l.areas||[];window.S.docs=l.docs||[];window.S.specs=l.specs||[]}
-        if((l&&(l.docs||[]).length)||window.BUD.hasLocal())window.pushCloud();
+        if((l&&(l.docs||[]).length)||window.BUD.hasLocal()||localStorage.getItem("sales-v1"))window.pushCloud();
       }
       first=false;window.ready=true;
       if(!window.shown){window.animNext=true;window.shown=true}
