@@ -367,12 +367,12 @@ body.md-sales .fab{display:none}
 @media(min-width:560px){body{max-width:760px}.smetrics{grid-template-columns:repeat(4,minmax(0,1fr))}.smetric strong{font-size:23px}}
 
 
-/* Subtle 3D depth treatment: lightweight and mobile-friendly */
-.bcard,.smetric,.bk{box-shadow:0 7px 18px rgba(15,35,65,.10),inset 0 1px 0 rgba(255,255,255,.55);transform:translateZ(0);transition:transform .18s ease,box-shadow .18s ease}
-.bcard{border:1px solid rgba(120,145,180,.18)}
-.bbtn,.bchip,.nv{box-shadow:0 3px 0 rgba(20,45,75,.14);transition:transform .15s ease,box-shadow .15s ease}
-.bbtn:active,.bchip:active,.nv:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(20,45,75,.14)}
-@media(hover:hover){.bcard:hover,.smetric:hover{transform:perspective(900px) translateY(-2px) rotateX(.4deg);box-shadow:0 12px 24px rgba(15,35,65,.13)}}
+/* 3D styling: pronounced layered depth, but restrained motion on touch screens */
+.bcard,.smetric,.bk{box-shadow:0 12px 26px rgba(15,35,65,.16),inset 0 1px 0 rgba(255,255,255,.68);border:1px solid rgba(120,145,180,.24);transform:translateZ(0);transition:transform .2s ease,box-shadow .2s ease}
+.bhero{box-shadow:0 18px 0 -8px rgba(60,75,125,.16),0 24px 42px -18px rgba(10,25,60,.45),inset 0 1px 0 rgba(255,255,255,.22)}
+.bbtn,.bchip,.nv{box-shadow:0 5px 0 rgba(20,45,75,.18),0 8px 16px rgba(20,45,75,.10);transition:transform .15s ease,box-shadow .15s ease}
+.bbtn:active,.bchip:active,.nv:active{transform:translateY(4px);box-shadow:0 1px 0 rgba(20,45,75,.14)}
+@media(hover:hover){.bcard:hover,.smetric:hover{transform:perspective(850px) translateY(-4px) rotateX(1deg);box-shadow:0 18px 32px rgba(15,35,65,.2)}}
 @media(prefers-reduced-motion:reduce){.bcard,.smetric,.bk,.bbtn,.bchip,.nv{transition:none}}
 </style>
 </head>
@@ -402,7 +402,7 @@ body.md-sales .fab{display:none}
 <label>اسم الدكتور / المنشأة (اختياري)</label><input id="b_who" list="b_whol" placeholder="مثال: د. أحمد - مستشفى الميري"><datalist id="b_whol"></datalist>
 <label>ملاحظة (اختياري)</label><input id="b_note" placeholder="مثال: ميكروباص من الحضرة لسموحة">
 </details></section>
-<details class="bacc"><summary>📊 الأرقام والسجل</summary>
+<details class="bacc"><summary>📊 ملخص الشهر والسجل</summary>
 <section class="bcard bt-b"><div class="bkg" style="grid-template-columns:repeat(3,1fr)"><div class="bk"><span>اتصرف النهارده</span><b id="b_spent">0</b></div><div class="bk"><span>هيتبقى (الخطة)</span><b id="b_plan">0</b></div><div class="bk"><span>هيتبقى (معدلك)</span><b id="b_proj">0</b></div></div></section>
 <section class="bcard bt-b"><h2>ميزانية الأنواع النهارده</h2><div id="b_catBud"></div></section>
 <section class="bcard bt-b"><h2>صرفك يوم بيوم (الشهر ده)</h2><div class="bcol" id="b_chart"></div><div class="bbd" id="b_stats" style="margin-top:8px"></div></section>
@@ -415,9 +415,9 @@ body.md-sales .fab{display:none}
 </details>
 <details class="bacc"><summary>⚙️ الإعدادات</summary>
 <section class="bcard bt-c"><h2>إعدادات الميزانية</h2>
-<label>الرصيد الحالي (جنيه) - عدّله في أي وقت</label><input id="b_s_bal" type="number" inputmode="decimal">
+<label>ميزانية الشهر (جنيه) - تبدأ من جديد أول كل شهر</label><input id="b_s_bal" type="number" inputmode="decimal">
 <label>المبلغ اللي لازم يتبقى معاك آخر الفترة (الادخار)</label><input id="b_s_target" type="number" inputmode="decimal">
-<label>آخر يوم في الفترة (قبل أول الشهر)</label><input id="b_s_end" type="date">
+<label>نهاية الشهر</label><input id="b_s_end" type="date">
 <label>هامش أمان على الحد اليومي (%)</label><input id="b_s_safe" type="number" inputmode="decimal">
 <label>مصاريف ثابتة لازم تتدفع قبل آخر الفترة (إيجار / قسط / فاتورة)</label><input id="b_s_fixed" type="number" inputmode="decimal">
 <label style="margin-top:16px;color:var(--ink);font-weight:700">ميزانية يومية لكل نوع (اختياري)</label><div id="b_cb"></div>
@@ -871,8 +871,8 @@ function defB(){const n=new Date(),e=new Date(n.getFullYear(),n.getMonth()+1,0);
 function norm(o){const d=defB();if(!o||typeof o!=="object")return d;for(const k in d)if(o[k]===undefined||o[k]===null)o[k]=d[k];if(!Array.isArray(o.exp))o.exp=[];if(!Array.isArray(o.inc))o.inc=[];return o}
 function lists(){CATS=(B.cats&&B.cats.length?B.cats:DC).map(x=>x.slice());AREAS=(B.areas&&B.areas.length?B.areas:DA).map(x=>x.slice())}
 try{B=norm(JSON.parse(localStorage.getItem("budget1")))}catch(e){B=norm(null)}
-// بدء دورة ميزانية جديدة تلقائيًا مع أول فتح في شهر جديد، مع الاحتفاظ بسجل الشهر السابق.
-(function(){const n=new Date(),key=n.getFullYear()+"-"+pad(n.getMonth()+1),today=ymd(n);if(B.monthKey&&B.monthKey!==key){const carry=B.start+sum(B.inc)-sum(B.exp);B.archive=Array.isArray(B.archive)?B.archive:[];B.archive.push({month:B.monthKey,start:B.start,ending:carry,exp:B.exp,inc:B.inc});B.start=carry;B.exp=[];B.inc=[];B.from=today;B.end=ymd(new Date(n.getFullYear(),n.getMonth()+1,0));}B.monthKey=key;})();
+// كل شهر دورة مستقلة: أرشفة الشهر السابق، ثم البدء من مبلغ الميزانية المحدد دون ترحيل الرصيد أو المصروفات.
+(function(){const n=new Date(),key=n.getFullYear()+"-"+pad(n.getMonth()+1),today=ymd(n);B.archive=Array.isArray(B.archive)?B.archive:[];if(B.monthKey&&B.monthKey!==key){B.archive.push({month:B.monthKey,start:B.start,ending:B.start+sum(B.inc)-sum(B.exp),exp:B.exp,inc:B.inc});B.exp=[];B.inc=[];B.from=today;B.end=ymd(new Date(n.getFullYear(),n.getMonth()+1,0));}B.monthKey=key;if(!B.from||B.from.slice(0,7)!==key)B.from=today;saveBudgetMonth();function saveBudgetMonth(){try{localStorage.setItem("budget1",JSON.stringify(B))}catch(e){}}})();
 lists();cat=CATS[0][0];
 const hasLocal=()=>{try{return localStorage.getItem("budget1")!==null}catch(e){return false}};
 const saveLocal=()=>{try{localStorage.setItem("budget1",JSON.stringify(B))}catch(e){}};
