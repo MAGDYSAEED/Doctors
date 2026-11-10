@@ -118,8 +118,57 @@ summary{margin-top:16px;color:var(--mut);font-size:14px;cursor:pointer}
 .syn{display:inline-flex;align-items:center;gap:7px;margin-top:10px;padding:4px 12px 4px 10px;border-radius:999px;font-size:12px;font-weight:600;background:rgba(255,255,255,.12);position:relative;z-index:1}
 .syn i{width:7px;height:7px;border-radius:50%;background:#4ade80}
 .syn.p i{background:#fbbf24}.syn.o i{background:#f87171}
+body.md-bud #docv{display:none}
+body:not(.md-bud) #bud{display:none}
+body.md-bud .fab{display:none}
+.bcard{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px;margin:12px 0;box-shadow:var(--sh)}
+.bcard h2{margin:0 0 10px;font-size:17px;letter-spacing:-.2px}
+.bcard label{margin:12px 0 6px}
+.bhero{text-align:center}
+.bring{position:relative;width:190px;height:190px;margin:4px auto 14px}
+.bring svg{width:100%;height:100%}
+.btr{fill:none;stroke:var(--line);stroke-width:11}
+.bpg{fill:none;stroke-width:11;stroke-linecap:round;stroke-dasharray:377;stroke-dashoffset:377;transform:rotate(-90deg);transform-origin:70px 70px;transition:stroke-dashoffset 1s cubic-bezier(.2,.8,.2,1)}
+.brc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:0 26px}
+.brc span{font-size:12px;color:var(--mut);font-weight:500}
+.brc b{font-size:40px;font-weight:700;letter-spacing:-1px;font-variant-numeric:tabular-nums;line-height:1.1}
+.brc small{font-size:12px;color:var(--mut)}
+.bkg{display:grid;grid-template-columns:1fr 1fr;gap:9px;text-align:start}
+.bk{background:var(--card2);border:1px solid var(--line);border-radius:16px;padding:11px 12px}
+.bk span{display:block;color:var(--mut);font-size:11.5px;font-weight:500}
+.bk b{display:block;margin-top:3px;font-size:20px;font-weight:700;font-variant-numeric:tabular-nums}
+.bmsg{margin-top:12px;padding:12px 14px;border-radius:16px;background:var(--card2);font-size:14px;line-height:1.7;text-align:start}
+.balert{margin:12px 0;padding:13px 15px;border-radius:18px;font-weight:700;font-size:14px;color:#fff;background:linear-gradient(135deg,#f59e0b,#dc2626);box-shadow:0 14px 28px -14px #dc2626}
+.balert[hidden]{display:none}
+#bud .ok{color:var(--on)}#bud .wr{color:var(--amb)}#bud .er{color:var(--off)}
+.btiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.btile{display:flex;flex-direction:column;align-items:center;gap:3px;padding:11px 4px;border:1.5px solid var(--line);border-radius:16px;background:var(--card2);font-size:12px;font-weight:600;text-align:center;cursor:pointer;transition:.15s}
+.btile em{font-style:normal;font-size:22px}
+.btile.on{border-color:var(--pri);background:color-mix(in srgb,var(--pri) 12%,transparent);color:var(--pri)}
+#b_amt{height:62px;font-size:28px;font-weight:700;text-align:center}
+.bchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.bchip{padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--card2);font-size:13px;font-weight:500;cursor:pointer;color:var(--ink)}
+.bchip.on{background:var(--pri);border-color:var(--pri);color:#fff;font-weight:700}
+.bchip b{margin-inline-start:6px;color:var(--off);cursor:pointer}
+.brow{display:flex;gap:9px}.brow>*{flex:1;min-width:0}
+#bud select{width:100%;height:48px;padding:0 12px;border:1px solid var(--line);border-radius:14px;background:var(--card2);color:var(--ink);font:inherit}
+.bbtn{display:block;width:100%;margin-top:12px;height:50px;border:0;border-radius:16px;background:linear-gradient(135deg,var(--pri),color-mix(in srgb,var(--pri) 60%,#8b5cf6));color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;box-shadow:0 14px 26px -14px var(--pri)}
+.bbtn.g{background:var(--card2);color:var(--ink);border:1px solid var(--line);box-shadow:none;font-weight:600}
+.bbtn[hidden]{display:none}
+.bbar{margin:11px 0;font-size:13px}.bbar>div{display:flex;justify-content:space-between;gap:8px}
+.bbar i{display:block;height:7px;margin-top:5px;border-radius:4px;background:linear-gradient(90deg,var(--pri),#8b5cf6)}
+.bcol{display:flex;align-items:flex-end;gap:2px;height:110px}
+.bcol i{flex:1;min-height:2px;border-radius:3px 3px 0 0;background:color-mix(in srgb,var(--pri) 55%,transparent)}
+.bcol i.o{background:var(--off)}.bcol i.n{background:var(--pri)}
+.bbd{display:block;margin-top:10px;color:var(--mut);font-size:12.5px;line-height:1.7}
+.btabs{display:flex;gap:6px;margin-bottom:10px}
+.bit{display:flex;align-items:center;gap:10px;padding:11px 0;border-top:1px solid var(--line)}
+.bit .ico{font-size:22px}.bit .g{flex:1;min-width:0}.bit .g b{display:block;font-size:14px}.bit .g small{display:block;margin-top:2px;color:var(--mut);font-size:12px;overflow:hidden;text-overflow:ellipsis}
+.bit .am{text-align:end;white-space:nowrap}.bit .am b{display:block;font-size:15px;font-variant-numeric:tabular-nums}
+.bs{border:0;background:transparent;font-size:15px;padding:4px 6px;cursor:pointer}
 .btoast{position:fixed;inset-inline:0;bottom:calc(96px + env(safe-area-inset-bottom,0px));margin-inline:auto;width:fit-content;max-width:90%;padding:11px 18px;border-radius:16px;background:var(--ink);color:var(--bg);font-size:13.5px;font-weight:600;opacity:0;transform:translateY(10px);pointer-events:none;transition:.25s;z-index:90}
 .btoast.on{opacity:1;transform:none}
+#bud .empty{padding:18px 0}
 /* ---- تبسيط الشكل ---- */
 .top{padding:14px 16px 12px;border-radius:24px}
 .clk{font-size:38px;letter-spacing:-1px}.clk small{font-size:13px;margin-inline-start:6px}
@@ -363,14 +412,9 @@ html[data-fx="flat"] .cube{--cedge:1px;border-inline-end-width:1px}
 .cube .ck svg{width:20px;height:20px}
 .cube.later .ck{color:#2a1e00;border-color:rgba(42,30,0,.55)}
 .cube.met .ck{background:#fff;border-color:#fff;color:#0b6b43}
-
-/* ---- نفس الستايل على باقي الأزرار والشريط السفلي ---- */
-.b:not(.p),.ssecondary,.ai,.chip:not(.add),.sg,.nav{border-bottom:var(--edge) solid var(--edgec)}
-.chip.sel,.sg.sel{border-bottom-color:color-mix(in srgb,var(--pri) 65%,#000)}
-.acts .ai:first-child{border-bottom-color:color-mix(in srgb,var(--pri) 65%,#000)}
-.ai:active,.ssecondary:active,.sg:active{transform:translateY(2px)}
-.cp{font-size:12.5px;font-weight:600;opacity:.92;margin-top:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.cube{min-height:172px}
+.cube{min-height:176px}
+.cp{font-size:12px;font-weight:700;opacity:.95;margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,.28);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cube.later .cp{border-top-color:rgba(42,30,0,.3)}
 </style>
 </head>
 <body>
@@ -450,7 +494,6 @@ html[data-fx="flat"] .cube{--cedge:1px;border-inline-end-width:1px}
   </details>
   <button class="b" id="cl2" style="width:100%;margin-top:16px">إغلاق</button>
 </div></div>
-<div class="btoast" id="b_toast" role="status"></div>
 <div id="login"><div class="lg"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg></div><h2>MedRep Pro</h2><p id="lmsg">جاري التحميل...</p><button id="gbtn" hidden>الدخول بحساب جوجل</button></div>
 <script>
 var DN=["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"],ORDER=[6,0,1,2,3,4,5],SH=["أحد","اثنين","ثلاثاء","أربعاء","خميس","جمعة","سبت"];
@@ -682,7 +725,7 @@ function render(){
   if(!list.length){$("list").innerHTML='<div class="empty">'+(S.docs.length?"مفيش نتائج":"ضيف أول دكتور بزر +")+'</div>';return}
   $("list").innerHTML=list.map(function(o){
     var d=o.d,s=o.s,id=esc(d.id),met=metToday(d.metAt,now);
-    return '<div class="cube '+s.k+(met?" met":"")+'" data-o="'+id+'"><button class="ck" data-m="'+id+'" aria-label="اتقابل">'+(met?CKI:"")+'</button><div class="cn">'+esc(d.name)+(d.star?" ★":"")+'</div><div class="cs">'+(d.spec?esc(d.spec)+" · ":"")+esc(d.area||"")+nearT(d)+'</div>'+(d.place?'<div class="cp">📍 '+esc(d.place)+'</div>':"")+'<div class="cst">'+esc(s.t)+'</div></div>'
+    return '<div class="cube '+s.k+(met?" met":"")+'" data-o="'+id+'"><button class="ck" data-m="'+id+'" aria-label="اتقابل">'+(met?CKI:"")+'</button><div class="cn">'+esc(d.name)+(d.star?" ★":"")+'</div><div class="cs">'+(d.spec?esc(d.spec):"")+(d.spec&&d.area?" · ":"")+esc(d.area||"")+nearT(d)+'</div>'+(d.place?'<div class="cp">'+esc(d.place)+'</div>':"")+'<div class="cst">'+esc(s.t)+'</div></div>'
   }).join("");
   animNext=false;popId=null;
 }
@@ -815,7 +858,7 @@ $("health").onclick=function(){
     });
     if(!Array.isArray(areas))issues.push("قائمة المناطق غير سليمة");
     if(!Array.isArray(specs))issues.push("قائمة التخصصات غير سليمة");
-    if(b&&typeof b!=="object")issues.push("بيانات الميزانية المحفوظة غير سليمة");
+    if(!b||typeof b!=="object")issues.push("بيانات الميزانية غير سليمة");
     if(sales&&(!Array.isArray(sales.activities)))issues.push("بيانات المبيعات غير سليمة");
     var msg="فحص MedRep Pro\\n\\nالأطباء: "+d.length+"\\nالمناطق: "+areas.length+"\\nالتخصصات: "+specs.length+"\\nأنشطة المبيعات: "+(sales&&Array.isArray(sales.activities)?sales.activities.length:0)+"\\n\\n";
     msg+=issues.length?"ملاحظات تحتاج مراجعة ("+issues.length+"):\\n• "+issues.slice(0,25).join("\\n• "):"لم تظهر مشكلات بنيوية واضحة في الفحص المحلي.";
