@@ -369,6 +369,8 @@ html[data-fx="flat"] .cube{--cedge:1px;border-inline-end-width:1px}
 .chip.sel,.sg.sel{border-bottom-color:color-mix(in srgb,var(--pri) 65%,#000)}
 .acts .ai:first-child{border-bottom-color:color-mix(in srgb,var(--pri) 65%,#000)}
 .ai:active,.ssecondary:active,.sg:active{transform:translateY(2px)}
+.cp{font-size:12.5px;font-weight:600;opacity:.92;margin-top:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cube{min-height:172px}
 </style>
 </head>
 <body>
@@ -680,7 +682,7 @@ function render(){
   if(!list.length){$("list").innerHTML='<div class="empty">'+(S.docs.length?"مفيش نتائج":"ضيف أول دكتور بزر +")+'</div>';return}
   $("list").innerHTML=list.map(function(o){
     var d=o.d,s=o.s,id=esc(d.id),met=metToday(d.metAt,now);
-    return '<div class="cube '+s.k+(met?" met":"")+'" data-o="'+id+'"><button class="ck" data-m="'+id+'" aria-label="اتقابل">'+(met?CKI:"")+'</button><div class="cn">'+esc(d.name)+(d.star?" ★":"")+'</div><div class="cs">'+(d.spec?esc(d.spec)+" · ":"")+esc(d.area||d.place||"")+nearT(d)+'</div><div class="cst">'+esc(s.t)+'</div></div>'
+    return '<div class="cube '+s.k+(met?" met":"")+'" data-o="'+id+'"><button class="ck" data-m="'+id+'" aria-label="اتقابل">'+(met?CKI:"")+'</button><div class="cn">'+esc(d.name)+(d.star?" ★":"")+'</div><div class="cs">'+(d.spec?esc(d.spec)+" · ":"")+esc(d.area||"")+nearT(d)+'</div>'+(d.place?'<div class="cp">📍 '+esc(d.place)+'</div>':"")+'<div class="cst">'+esc(s.t)+'</div></div>'
   }).join("");
   animNext=false;popId=null;
 }
